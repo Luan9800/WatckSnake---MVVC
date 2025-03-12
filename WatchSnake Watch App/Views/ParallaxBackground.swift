@@ -1,20 +1,33 @@
 import SwiftUI
 
 struct ParallaxBackground: View {
-    @State private var offset: CGFloat = -50
-
     var body: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.black.opacity(0.8)]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .edgesIgnoringSafeArea(.all)
-        .offset(y: offset)
-        .onAppear {
-            withAnimation(Animation.linear(duration: 6).repeatForever(autoreverses: true)) {
-                offset = 50
+        GeometryReader { geometry in
+            Image("pixel_icon")
+                .resizable()
+                .scaledToFill()
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                .clipped()
+                .ignoresSafeArea()
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            ParallaxBackground()
+            
+            VStack {
+                Text("Conteúdo do App")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                    .padding()
             }
         }
     }
+}
+
+#Preview {
+    ContentView()
 }

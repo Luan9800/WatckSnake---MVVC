@@ -7,13 +7,15 @@ struct GameModeSelectionView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 5) {
+            VStack(spacing: 10) {
+                Spacer(minLength: 5)
+
                 Text("Modo do Jogo")
                     .font(.title3)
                     .bold()
-                    .padding()
+                    .padding(.top, 10)
 
-                // 🔹 Botão Easy (Liberado para todos)
+               
                 Button(action: {
                     selectedMode = .easy
                 }) {
@@ -62,6 +64,8 @@ struct GameModeSelectionView: View {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
+
+                Spacer() // 🔽 Adiciona espaço no final para centralizar melhor
             }
             .padding()
             .buttonStyle(.plain)
@@ -82,6 +86,7 @@ struct GameModeSelectionView: View {
         }
     }
 }
+
 struct GameModeSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         GameModeSelectionView()

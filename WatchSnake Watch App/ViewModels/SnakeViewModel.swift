@@ -55,9 +55,9 @@ class SnakeViewModel: ObservableObject {
     private func startTimer() {
         let interval: TimeInterval = {
             switch gameMode {
-            case .easy: return 0.7 // 🟢 Aumentei um pouco a velocidade
-            case .medium: return 0.45
-            case .hard: return 0.25
+            case .easy: return 0.8 // 🟢 Aumentei um pouco a velocidade
+            case .medium: return 0.55
+            case .hard: return 0.35
             }
         }()
 
@@ -185,4 +185,5 @@ class SnakeViewModel: ObservableObject {
     func triggerHapticFeedback(type: WKHapticType) {
         WKInterfaceDevice.current().play(type)
     }
+    
 }

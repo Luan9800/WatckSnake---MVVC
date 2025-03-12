@@ -17,7 +17,6 @@ struct SnakeHomeView: View {
                         .opacity(0.9)
                         .transition(.opacity)
                         .onAppear {
-                            // ⏳ Aguarda 2 segundos antes de navegar
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 withAnimation {
                                     isActive = true

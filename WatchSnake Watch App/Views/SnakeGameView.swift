@@ -4,11 +4,15 @@ import WatchKit
 
 struct SnakeGameView: View {
     @StateObject private var viewModel = SnakeViewModel()
+    @State private var offsetX: CGFloat = 0
+    @State private var offsetY: CGFloat = 0
+
     var selectedMode: GameMode
 
     var body: some View {
         ZStack {
-            parallaxBackground() // Adiciona o fundo com efeito parallax
+            ParallaxBackground()
+                .edgesIgnoringSafeArea(.all)
 
             VStack {
                 if viewModel.isGameOver {
@@ -24,7 +28,7 @@ struct SnakeGameView: View {
         }
         .onAppear {
             Task {
-                 viewModel.setGameMode(selectedMode) // ✅ Correção: usando `await`
+                viewModel.setGameMode(selectedMode)
             }
         }
         .gesture(
@@ -49,9 +53,15 @@ struct SnakeGameView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: geometry.size.width * 1.2, height: geometry.size.height * 1.2)
-                .offset(x: -geometry.size.width * 0.1, y: -geometry.size.height * 0.1)
+                .offset(x: offsetX, y: offsetY)
                 .blur(radius: 5) // Pequeno desfoque para um efeito mais imersivo
                 .edgesIgnoringSafeArea(.all)
+                .onAppear {
+                    withAnimation(Animation.linear(duration: 6).repeatForever(autoreverses: true)) {
+                        offsetX = -geometry.size.width * 0.05
+                        offsetY = -geometry.size.height * 0.05
+                    }
+                }
         }
     }
 
@@ -108,8 +118,8 @@ struct SnakeGameView: View {
                     .foregroundColor(.black)
                     .clipShape(Capsule())
             }
-            .buttonStyle(.plain)
-            .padding(.top, -8)
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
         }
     }
 
