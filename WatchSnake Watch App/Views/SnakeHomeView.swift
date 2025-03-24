@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct SnakeHomeView: View {
-    var selectedMode: GameMode
+    var selectedMode: GameModo
     @State private var isActive = false
     
     var body: some View {
-        NavigationStack {
+      NavigationStack {
             ZStack {
                 if isActive {
-                    GameModeSelectionView()
+                    EnterPlayerNameView()
                 } else {
                     Image("snake_icon")
                         .resizable()
@@ -31,5 +31,5 @@ struct SnakeHomeView: View {
 }
 
 #Preview {
-    SnakeHomeView(selectedMode: GameMode.easy)
+    SnakeHomeView(selectedMode: GameModo.easy)
 }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7FEA4CDB2D5F7BCC0030AA85 /* WatchSnake Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7FEA4CDA2D5F7BCC0030AA85 /* WatchSnake Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7FEA4CDB2D5F7BCC0030AA85 /* Watch Snake Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7FEA4CDA2D5F7BCC0030AA85 /* Watch Snake Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,7 +27,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				7FEA4CDB2D5F7BCC0030AA85 /* WatchSnake Watch App.app in Embed Watch Content */,
+				7FEA4CDB2D5F7BCC0030AA85 /* Watch Snake Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -35,8 +35,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7FEA4CD42D5F7BCC0030AA85 /* WatchSnake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchSnake.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FEA4CDA2D5F7BCC0030AA85 /* WatchSnake Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchSnake Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FEA4CD42D5F7BCC0030AA85 /* Watch Snake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch Snake.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FEA4CDA2D5F7BCC0030AA85 /* Watch Snake Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch Snake Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -65,8 +65,8 @@
 		7FEA4CD52D5F7BCC0030AA85 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FEA4CD42D5F7BCC0030AA85 /* WatchSnake.app */,
-				7FEA4CDA2D5F7BCC0030AA85 /* WatchSnake Watch App.app */,
+				7FEA4CD42D5F7BCC0030AA85 /* Watch Snake.app */,
+				7FEA4CDA2D5F7BCC0030AA85 /* Watch Snake Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -74,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7FEA4CD32D5F7BCC0030AA85 /* WatchSnake */ = {
+		7FEA4CD32D5F7BCC0030AA85 /* Watch Snake */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7FEA4CEE2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "WatchSnake" */;
+			buildConfigurationList = 7FEA4CEE2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "Watch Snake" */;
 			buildPhases = (
 				7FEA4CD22D5F7BCC0030AA85 /* Resources */,
 				7FEA4CED2D5F7BCE0030AA85 /* Embed Watch Content */,
@@ -86,16 +86,16 @@
 			dependencies = (
 				7FEA4CDD2D5F7BCC0030AA85 /* PBXTargetDependency */,
 			);
-			name = WatchSnake;
+			name = "Watch Snake";
 			packageProductDependencies = (
 			);
 			productName = WatchSnake;
-			productReference = 7FEA4CD42D5F7BCC0030AA85 /* WatchSnake.app */;
+			productReference = 7FEA4CD42D5F7BCC0030AA85 /* Watch Snake.app */;
 			productType = "com.apple.product-type.application.watchapp2-container";
 		};
-		7FEA4CD92D5F7BCC0030AA85 /* WatchSnake Watch App */ = {
+		7FEA4CD92D5F7BCC0030AA85 /* Watch Snake Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7FEA4CEA2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "WatchSnake Watch App" */;
+			buildConfigurationList = 7FEA4CEA2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "Watch Snake Watch App" */;
 			buildPhases = (
 				7FEA4CD62D5F7BCC0030AA85 /* Sources */,
 				7FEA4CD72D5F7BCC0030AA85 /* Frameworks */,
@@ -108,11 +108,11 @@
 			fileSystemSynchronizedGroups = (
 				7FEA4CDE2D5F7BCC0030AA85 /* WatchSnake Watch App */,
 			);
-			name = "WatchSnake Watch App";
+			name = "Watch Snake Watch App";
 			packageProductDependencies = (
 			);
 			productName = "WatchSnake Watch App";
-			productReference = 7FEA4CDA2D5F7BCC0030AA85 /* WatchSnake Watch App.app */;
+			productReference = 7FEA4CDA2D5F7BCC0030AA85 /* Watch Snake Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -133,7 +133,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7FEA4CD12D5F7BCC0030AA85 /* Build configuration list for PBXProject "WatchSnake" */;
+			buildConfigurationList = 7FEA4CD12D5F7BCC0030AA85 /* Build configuration list for PBXProject "Watch Snake" */;
 			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -142,12 +142,16 @@
 				Base,
 			);
 			mainGroup = 7FEA4CCD2D5F7BCC0030AA85;
+			packageReferences = (
+				7F4AD5E12D88C5E10047BEB6 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				7F4AD5E52D88CF660047BEB6 /* XCLocalSwiftPackageReference "../realm-swift-master" */,
+			);
 			productRefGroup = 7FEA4CD52D5F7BCC0030AA85 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7FEA4CD32D5F7BCC0030AA85 /* WatchSnake */,
-				7FEA4CD92D5F7BCC0030AA85 /* WatchSnake Watch App */,
+				7FEA4CD32D5F7BCC0030AA85 /* Watch Snake */,
+				7FEA4CD92D5F7BCC0030AA85 /* Watch Snake Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -182,7 +186,7 @@
 /* Begin PBXTargetDependency section */
 		7FEA4CDD2D5F7BCC0030AA85 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7FEA4CD92D5F7BCC0030AA85 /* WatchSnake Watch App */;
+			target = 7FEA4CD92D5F7BCC0030AA85 /* Watch Snake Watch App */;
 			targetProxy = 7FEA4CDC2D5F7BCC0030AA85 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -401,7 +405,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7FEA4CD12D5F7BCC0030AA85 /* Build configuration list for PBXProject "WatchSnake" */ = {
+		7FEA4CD12D5F7BCC0030AA85 /* Build configuration list for PBXProject "Watch Snake" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FEA4CE82D5F7BCE0030AA85 /* Debug */,
@@ -410,7 +414,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7FEA4CEA2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "WatchSnake Watch App" */ = {
+		7FEA4CEA2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "Watch Snake Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FEA4CEB2D5F7BCE0030AA85 /* Debug */,
@@ -419,7 +423,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7FEA4CEE2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "WatchSnake" */ = {
+		7FEA4CEE2D5F7BCE0030AA85 /* Build configuration list for PBXNativeTarget "Watch Snake" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FEA4CEF2D5F7BCE0030AA85 /* Debug */,
@@ -429,6 +433,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		7F4AD5E52D88CF660047BEB6 /* XCLocalSwiftPackageReference "../realm-swift-master" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../realm-swift-master";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7F4AD5E12D88C5E10047BEB6 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 7FEA4CCE2D5F7BCC0030AA85 /* Project object */;
 }

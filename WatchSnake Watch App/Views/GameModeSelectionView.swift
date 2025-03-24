@@ -1,25 +1,17 @@
 import SwiftUI
 
 struct GameModeSelectionView: View {
-    @AppStorage("isPremiumUser") private var isPremiumUser: Bool = false
+    @AppStorage("isPremiumUser") private var isPremiumUser: Bool = true
     @State private var showPurchaseAlert = false
-    @State private var selectedMode: GameMode? = nil
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 10) {
-                Spacer(minLength: 5)
-
-                Text("Modo do Jogo")
-                    .font(.title3)
-                    .bold()
-                    .padding(.top, 10)
-
-               
-                Button(action: {
-                    selectedMode = .easy
-                }) {
-                    Text("Easy")
+            VStack(spacing: 5) {
+                Spacer()
+                
+                // Botão para modo fácil
+                NavigationLink(destination: SnakeGameView(selectedMode: .easy)) {
+                    Text("Fácil")
                         .font(.title3)
                         .bold()
                         .padding()
@@ -29,14 +21,8 @@ struct GameModeSelectionView: View {
                         .cornerRadius(12)
                 }
 
-                // 🔸 Botão Médio (Somente Premium)
-                Button(action: {
-                    if isPremiumUser {
-                        selectedMode = .medium
-                    } else {
-                        showPurchaseAlert = true
-                    }
-                }) {
+                // Botão para modo médio (requer premium)
+                NavigationLink(destination: SnakeGameView(selectedMode: .medium)) {
                     Text(isPremiumUser ? "Médio" : "🔒 Médio")
                         .font(.title3)
                         .bold()
@@ -46,15 +32,10 @@ struct GameModeSelectionView: View {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
+                .disabled(!isPremiumUser)
 
-                // 🔺 Botão Hard (Somente Premium)
-                Button(action: {
-                    if isPremiumUser {
-                        selectedMode = .hard
-                    } else {
-                        showPurchaseAlert = true
-                    }
-                }) {
+                // Botão para modo difícil (requer premium)
+                NavigationLink(destination: SnakeGameView(selectedMode: .hard)) {
                     Text(isPremiumUser ? "Hard" : "🔒 Hard")
                         .font(.title3)
                         .bold()
@@ -64,31 +45,36 @@ struct GameModeSelectionView: View {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
+                .disabled(!isPremiumUser)
 
-                Spacer() // 🔽 Adiciona espaço no final para centralizar melhor
+                // Botão para modo experiente (requer premium)
+                NavigationLink(destination: SnakeGameView(selectedMode: .expert)) {
+                    Text(isPremiumUser ? "Experiente" : "🔒 Experiente")
+                        .font(.title3)
+                        .bold()
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(isPremiumUser ? Color.purple : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                .disabled(!isPremiumUser)
             }
             .padding()
             .buttonStyle(.plain)
-            .padding(.horizontal , 5)
-            
-            // 🚨 Alerta para usuários não premium
+            .padding(.horizontal, 14)
+
+            // Alerta para usuários não premium
             .alert("Apenas para usuários premium", isPresented: $showPurchaseAlert) {
                 Button("OK", role: .cancel) {}
                 Button("Comprar Premium") {
                     isPremiumUser = true
                 }
             }
-            
-            // 🔄 Navegação para SnakeGameView
-            .navigationDestination(item: $selectedMode) { mode in
-                SnakeGameView(selectedMode: mode)
-            }
         }
     }
 }
 
-struct GameModeSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameModeSelectionView()
-    }
+#Preview {
+    GameModeSelectionView()
 }

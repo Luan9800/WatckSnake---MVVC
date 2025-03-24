@@ -1,126 +1,142 @@
 import SwiftUI
 import Combine
+import CloudKit
 import WatchKit
+import Foundation
 
 struct SnakeGameView: View {
     @StateObject private var viewModel = SnakeViewModel()
-    @State private var offsetX: CGFloat = 0
-    @State private var offsetY: CGFloat = 0
-
-    var selectedMode: GameMode
-
+    @State private var showRanking = false
+    var selectedMode: GameModo
+    
     var body: some View {
-        ZStack {
-            ParallaxBackground()
-                .edgesIgnoringSafeArea(.all)
-
-            VStack {
-                if viewModel.isGameOver {
-                    gameOverView()
-                } else if viewModel.hasWon {
-                    victoryView()
-                } else {
-                    gameGridView()
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.bottom, 10)
-        }
-        .onAppear {
-            Task {
-                viewModel.setGameMode(selectedMode)
-            }
-        }
-        .gesture(
-            DragGesture()
-                .onEnded { gesture in
-                    let horizontalAmount = gesture.translation.width
-                    let verticalAmount = gesture.translation.height
-
-                    if abs(horizontalAmount) > abs(verticalAmount) {
-                        viewModel.changeDirection(to: horizontalAmount > 0 ? .right : .left)
+        NavigationStack {
+            ZStack {
+                ParallaxBackground()
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    if viewModel.isPaused {
+                        pausedView()
+                    } else if viewModel.isGameOver {
+                        gameOverView()
+                    } else if viewModel.hasWon {
+                        victoryView()
                     } else {
-                        viewModel.changeDirection(to: verticalAmount > 0 ? .down : .up)
-                    }
-                    triggerHapticFeedback(type: .directionUp)
-                }
-        )
-    }
-
-    private func parallaxBackground() -> some View {
-        GeometryReader { geometry in
-            Image("parallaxBackground") // Substitua pelo nome da sua imagem de fundo
-                .resizable()
-                .scaledToFill()
-                .frame(width: geometry.size.width * 1.2, height: geometry.size.height * 1.2)
-                .offset(x: offsetX, y: offsetY)
-                .blur(radius: 5) // Pequeno desfoque para um efeito mais imersivo
-                .edgesIgnoringSafeArea(.all)
-                .onAppear {
-                    withAnimation(Animation.linear(duration: 6).repeatForever(autoreverses: true)) {
-                        offsetX = -geometry.size.width * 0.05
-                        offsetY = -geometry.size.height * 0.05
+                        gameGridView()
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.bottom, 5)
+                .buttonStyle(PlainButtonStyle())
+            }
+            .onAppear {
+                Task {
+                    viewModel.setGameModo(selectedMode)
+                }
+            }
+            .gesture(
+                DragGesture()
+                    .onEnded { gesture in
+                        let horizontalAmount = gesture.translation.width
+                        let verticalAmount = gesture.translation.height
+                        
+                        if abs(horizontalAmount) > abs(verticalAmount) {
+                            viewModel.changeDirection(to: horizontalAmount > 0 ? .right : .left)
+                        } else {
+                            viewModel.changeDirection(to: verticalAmount > 0 ? .down : .up)
+                        }
+                        triggerHapticFeedback(type: .directionUp)
+                    }
+            )
+            .navigationDestination(isPresented: $showRanking) {
+                HighScoresView()
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .automatic)
         }
     }
-
+    
     private func gameOverView() -> some View {
-        VStack {
-            Text("\u{1F480} Perdeu")
+        VStack(spacing: 12) {
+            Text("☠️ Perdeu")
                 .font(.title2)
                 .bold()
-                .foregroundColor(.white)
-                .opacity(0.8)
-                .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: viewModel.isGameOver)
+                .foregroundColor(.red)
+                .opacity(0.9)
+                .padding(.top, 8)
 
             gameInfoView()
         }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.black.opacity(0.7))
+                .shadow(radius: 5)
+        )
+        .padding(.horizontal, 10)
     }
-
+    
     private func victoryView() -> some View {
         VStack {
-            Text("\u{1F3C6} Vitória!! \u{1F3C6}")
-                .font(.largeTitle)
+            Text("🏆 Vitória!")
+                .font(.title2)
                 .bold()
-                .foregroundColor(.yellow)
                 .opacity(0.8)
                 .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: viewModel.hasWon)
-
+            
             gameInfoView()
         }
     }
-
+    
     private func gameInfoView() -> some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 10) {
             Text("Pontuação: \(viewModel.model.score)")
-                .font(.title3)
+                .font(.body)
                 .bold()
-                .padding()
                 .foregroundColor(.white)
 
             Text("Nível: \(viewModel.model.level)")
-                .font(.title3)
+                .font(.body)
                 .bold()
-                .padding(.bottom, 10)
                 .foregroundColor(.white)
+            
+            HStack(spacing: 12) {
+                Button(action: {
+                    viewModel.startGameLoop()
+                    triggerHapticFeedback(type: .success)
+                }) {
+                    Text("🔄")
+                        .font(.title2)
+                        .bold()
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 5)
+                        .foregroundColor(.black)
+                        .clipShape(Circle())
+                }
 
-            Button(action: {
-                viewModel.startGameLoop()
-                triggerHapticFeedback(type: .success)
-            }) {
-                Text("Reiniciar")
-                    .font(.title3)
-                    .bold()
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 24)
-                    .background(Color.red)
-                    .foregroundColor(.black)
-                    .clipShape(Capsule())
+                Button(action: {
+                    showRanking = true
+                }) {
+                    Text("🏆")
+                        .font(.title2)
+                        .bold()
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 5)
+                        .foregroundColor(.black)
+                        .clipShape(Circle())
+                }
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.red)
         }
+        .padding()
+        .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.black.opacity(0.6))
+                    .shadow(radius: 5)
+        )
+        .padding(.horizontal, 10)
     }
 
     private func gameGridView() -> some View {
@@ -132,12 +148,33 @@ struct SnakeGameView: View {
                     .overlay(
                         viewModel.specialFood?.x == col && viewModel.specialFood?.y == row ?
                             Circle()
-                                .stroke(Color.yellow, lineWidth: 2)
-                                .shadow(color: .yellow, radius: 5) // ✨ Efeito de brilho!
-                            : nil
+                                .stroke(Color.yellow, lineWidth: 1.5)
+                                .shadow(color: .yellow, radius: 2)
+                        : nil
                     )
             }
             .background(Color.black.opacity(0.5))
+        }
+    }
+
+    private func pausedView() -> some View {
+        VStack {
+            Text("⏸ Pausado")
+                .font(.title3)
+                .bold()
+                .foregroundColor(.yellow)
+
+            Button(action: {
+                viewModel.resumeGame()
+            }) {
+                Text("▶️")
+                    .font(.title3)
+                    .bold()
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+            }
         }
     }
 
@@ -147,7 +184,9 @@ struct SnakeGameView: View {
         } else if viewModel.model.food.x == col && viewModel.model.food.y == row {
             return .red
         } else if viewModel.specialFood?.x == col && viewModel.specialFood?.y == row {
-            return .yellow.opacity(0.8) // ✨ Comida especial brilhante
+            return .yellow.opacity(0.8)
+        } else if viewModel.bomb?.x == col && viewModel.bomb?.y == row {
+            return .gray
         } else {
             return .black
         }
@@ -164,9 +203,9 @@ struct GridStack<Content: View>: View {
     let content: (Int, Int) -> Content
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 1) {
             ForEach(0..<rows, id: \.self) { row in
-                HStack(spacing: 2) {
+                HStack(spacing: 1) {
                     ForEach(0..<columns, id: \.self) { column in
                         content(row, column)
                     }
