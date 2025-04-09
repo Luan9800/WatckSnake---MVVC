@@ -1,0 +1,69 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "333f0b87625af4226c76b3e07c1214f6a2b2e57b079bcc791060cb6394f90309"
+    },
+    {
+      "guid" : "333f0b87625af4226c76b3e07c1214f676b564156fd8d3a30510123c8574458d"
+    }
+  ],
+  "containerPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /Watch Snake.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "watchsimulator",
+      "sdk" : "watchsimulator11.2",
+      "sdkVariant" : "watchsimulator",
+      "supportedArchitectures" : [
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Products",
+      "derivedDataPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData",
+      "indexDataStoreFolderPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "Watch7,9",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "11.2",
+          "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "Watch7,9",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES",
+          "ONLY_ACTIVE_ARCH" : "YES",
+          "TARGET_DEVICE_IDENTIFIER" : "BCD313FA-EEF4-4590-A2A0-82D8B81A477F",
+          "TARGET_DEVICE_MODEL" : "Watch7,9",
+          "TARGET_DEVICE_OS_VERSION" : "11.2",
+          "TARGET_DEVICE_PLATFORM_NAME" : "watchsimulator"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

@@ -1,0 +1,56 @@
+{
+  "source": "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/HighScoresView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Carregando Pontuações..",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nenhuma pontuação registrada :(",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pontuação 🏆",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modo: ",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "pontos",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 74
+        }
+      }
+    ]
+  },
+  "version": 1
+}

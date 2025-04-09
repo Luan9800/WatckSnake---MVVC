@@ -1,0 +1,88 @@
+{
+  "source": "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/GameModeSelectionView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Apenas para usuários premium",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fácil",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Médio",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔒 Médio",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hard",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔒 Hard",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Experiente",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔒 Experiente",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Comprar Premium",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 70
+        }
+      }
+    ]
+  },
+  "version": 1
+}

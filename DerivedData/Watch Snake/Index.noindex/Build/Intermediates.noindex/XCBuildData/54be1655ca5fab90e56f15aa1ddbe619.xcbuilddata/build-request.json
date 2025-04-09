@@ -1,0 +1,60 @@
+{
+  "buildCommand" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : true,
+    "targets" : null
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "333f0b87625af4226c76b3e07c1214f6a2b2e57b079bcc791060cb6394f90309"
+    }
+  ],
+  "containerPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /Watch Snake.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "indexbuild",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "watchsimulator",
+      "sdk" : "watchsimulator11.2",
+      "sdkVariant" : "watchsimulator",
+      "supportedArchitectures" : [
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/Build/Products",
+      "derivedDataPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData",
+      "indexDataStoreFolderPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/PrecompiledHeaders",
+      "indexRegularBuildIntermediatesPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex",
+      "indexRegularBuildProductsPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Products",
+      "pchPath" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Index.noindex/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "NO",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

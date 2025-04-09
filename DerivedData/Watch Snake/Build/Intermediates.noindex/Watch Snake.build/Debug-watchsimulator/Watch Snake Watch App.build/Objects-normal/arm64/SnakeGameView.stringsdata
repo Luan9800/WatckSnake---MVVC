@@ -1,0 +1,72 @@
+{
+  "source": "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/SnakeGameView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "☠️ Perdeu",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "🏆 Vitória!",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pontuação: %lld",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nível: %lld",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔄",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "🏆",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "⏸ Pausado",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "▶️",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 200
+        }
+      }
+    ]
+  },
+  "version": 1
+}

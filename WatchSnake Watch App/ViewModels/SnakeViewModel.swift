@@ -12,14 +12,22 @@ class SnakeViewModel: ObservableObject {
     @Published var specialFood: (x: Int, y: Int)?
     @Published var gameModo: GameModo = .easy
     @Published var starPowerUp: (x: Int, y: Int)?
-    @Published var isInvincible = false
-    
+    @Published var isInvincible: Bool = false
+    @Published var monster = Monster(position: CGPoint(x: 100, y: 100), direction: .right)
+    @Published var colorChangingFood: (x: Int, y: Int)? = nil
+    @Published var snakeColor: Color = .green
     
     private var timer: AnyCancellable?
     private var bombaTimer: AnyCancellable?
+    private var colorFoodSpawner: AnyCancellable?
     private var specialFoodTimer: AnyCancellable?
     private var powerUpTimer: AnyCancellable?
+    private var monsterTimer: AnyCancellable?
+    private var invincibilityTimer: AnyCancellable?
     private var currentInterval: TimeInterval = 0.8
+    private var cancellables = Set<AnyCancellable>()
+    private var eatColorChangingFood : AnyCancellable?
+    private var rainbowTimer: AnyCancellable?
     
     
     let gridSize = 15
@@ -27,18 +35,24 @@ class SnakeViewModel: ObservableObject {
     let winningScore = 300
     
     // 🟡 Comida especial que some rápido
-    
     init() {
         self.model = SnakeModel(
             snake: [(5, 5)],
-            food: (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10)),
+            food: nil,
+            foods: [
+                (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10)),
+                (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10))
+            ],
             direction: .right,
             score: 0,
             level: 1,
             startTime: Date()
         )
+        
+        timer?.cancel()
+        
         startGameLoop()
-        // 🎯 Detecta quando o usuário vira o pulso e pausa o jogo
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleWatchVisibilityChange),
@@ -58,10 +72,11 @@ class SnakeViewModel: ObservableObject {
     @objc private func handleWatchVisibilityChange(notification: Notification) {
         if notification.name == WKExtension.applicationDidEnterBackgroundNotification {
             pauseGame()
+            scheduleComeBackNotification()
         } else if notification.name == WKExtension.applicationWillEnterForegroundNotification {
             resumeGame()
+            cancelComeBackNotification()
         }
-        
     }
     
     /// ⏸ **Pausa o jogo**
@@ -91,19 +106,26 @@ class SnakeViewModel: ObservableObject {
         model = SnakeModel(
             snake: [(5, 5)],
             food: (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize)),
+            foods: [
+                (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10)),
+                (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10))
+            ],
             direction: .right,
             score: 0,
             level: 1,
             startTime: Date()
         )
-        specialFood = nil // Reseta a comida especial
+        specialFood = nil
         
         timer?.cancel()
-        adjustSpeed()
-        scheduleSpecialFood() // 🔥 Ativa o sistema da comida especial
-        cancelComeBackNotification() // Cancelar Notificação
-        scheduleBombs()// 🔥 Ativa as bombas
-        schedulePowerUp()
+        
+          adjustSpeed()
+          scheduleSpecialFood()
+          cancelComeBackNotification()
+          scheduleBombs()
+          startColorFoodSpawningLoop()
+          schedulePowerUp()
+          spawnColorChangingFood()
         
     }
     
@@ -113,7 +135,7 @@ class SnakeViewModel: ObservableObject {
         
         let baseSpeed: TimeInterval = {
             switch gameModo {
-            case .easy: return 0.7
+            case .easy: return 0.65
             case .medium: return 0.55
             case .hard: return 0.35
             case .expert : return 0.25
@@ -134,30 +156,40 @@ class SnakeViewModel: ObservableObject {
     /// ✨ **Agenda a comida especial para aparecer e desaparecer**
     private func scheduleSpecialFood() {
         specialFoodTimer?.cancel()
-        specialFoodTimer = Timer.publish(every: 8, on: .main, in: .common)
+        
+        
+        // Configura o timer para gerar comida especial a cada 10 segundos
+        specialFoodTimer = Timer.publish(every: 10, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
                 self?.spawnSpecialFood()
             }
     }
     
-    /// ✨ **Cria comida especial que desaparece em 1 segundo**
+    /// ✨ **Cria comida especial que desaparece e reaparece antes de sumir**
     private func spawnSpecialFood() {
-        guard specialFood == nil else { return } // Se já tem uma, não cria outra
+        guard specialFood == nil else { return }
         
-        specialFood = (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize))
+        let foodPosition = (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize))
+        specialFood = foodPosition
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) { // ⏳ Agora dura 1s
-            self.specialFood = nil
+        // Comida especial "pisca" rapidamente antes de sumir
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) { [weak self] in
+            self?.specialFood = nil
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) { [weak self] in
+            self?.specialFood = foodPosition
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0) { [weak self] in
+            self?.specialFood = nil
         }
     }
     
-    /// 🐍 **Movimenta a cobra e verifica colisões**
     private func moveSnake() {
         guard !isGameOver, !hasWon else { return }
         guard let head = model.snake.first else { return }
         
-        let newHead: (x: Int, y: Int)
+        var newHead: (x: Int, y: Int)
         switch model.direction {
         case .up: newHead = (x: head.0, y: head.1 - 1)
         case .down: newHead = (x: head.0, y: head.1 + 1)
@@ -165,6 +197,13 @@ class SnakeViewModel: ObservableObject {
         case .right: newHead = (x: head.0 + 1, y: head.1)
         }
         
+        // 🌌 Wrap-around se estiver invencível
+        if model.isInvincible {
+            newHead.x = (newHead.x + gridSize) % gridSize
+            newHead.y = (newHead.y + gridSize) % gridSize
+        }
+        
+        // 🚧 Verifica colisão geral
         if detectCollision(newHead) {
             isGameOver = true
             timer?.cancel()
@@ -172,58 +211,269 @@ class SnakeViewModel: ObservableObject {
             return
         }
         
-        model.snake.insert(newHead, at: 0)
+        model.snake.insert(newHead, at: 0) // Adiciona a nova cabeça
         
-        if newHead == model.food {
+        // 🍎 Comer comida normal
+        if let food = model.food, newHead == food {
             eatFood()
-        } else if let special = specialFood, newHead == special {
+            return
+        }
+        
+        // 🍬 Comer comida especial
+        if let special = specialFood, newHead == special {
             eatSpecialFood()
-        } else if let star = starPowerUp, newHead == star {
+            return
+        }
+        
+        // ⭐️ Pegar estrela da invencibilidade
+        if let star = starPowerUp, newHead == star {
             activateInvincibility()
-        } else if let bombPosition = bomb, newHead == bombPosition {
-            if !isInvincible { hitBomb() }
-        } else {
+            return
+        }
+        
+        // 💣 Colisão com bomba (se não for invencível)
+        if let bombPosition = bomb, newHead == bombPosition {
+            print("Bomba está em: \(bombPosition.x), \(bombPosition.y)")
+            if !isInvincible {
+                hitBomb()
+            }
+            return
+        }
+        
+       // 🌈 Comida de cor
+          if let colorFood = colorChangingFood, newHead == colorFood {
+          handleColorChangingEffect()
+          return
+        }
+        
+        if !isGameOver {
             model.snake.removeLast()
         }
     }
     
-    /// ⚠ **Verifica colisão**
-    private func detectCollision(_ newHead: (x: Int, y: Int)) -> Bool {
-        return newHead.x < 0 || newHead.y < 0 ||
-        newHead.x >= gridSize || newHead.y >= gridSize ||
-        model.snake.contains(where: { $0 == newHead })
+    
+    // Função de Criação dos Obstaculos
+    private func spawnObstacles() {
+        guard gameModo != .easy else { return }
+        
+        let maxObstacles = 3
+        let obstacleCount = min(model.level, maxObstacles)
+        
+        model.obstacles = []
+        
+        for _ in 0..<obstacleCount {
+            var newObstacle: (x: Int, y: Int)?
+            var attempts = 0
+            
+            repeat {
+                let candidate = (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize))
+                attempts += 1
+                
+                let foodPosition = model.food
+                
+                if !model.snake.contains(where: { $0 == candidate }) &&
+                    (foodPosition == nil || foodPosition! != candidate) &&
+                    !model.obstacles.contains(where: { $0 == candidate }) {
+                    newObstacle = candidate
+                }
+                
+                if attempts > 50 {
+                    print("⚠️ Não foi possível gerar um novo obstáculo!")
+                    break
+                }
+            } while newObstacle == nil
+            
+            if let newObstacle = newObstacle {
+                model.obstacles.append(newObstacle)
+            }
+        }
+        
+        cancellables = cancellables.filter { $0 !== specialFoodTimer }
+        
+        Just(())
+            .delay(for: .seconds(5), scheduler: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.model.obstacles.removeAll()
+            }
+            .store(in: &cancellables)
     }
     
-    /// 🍏 **Cobra come comida normal**
+    
+    /// ⚠ **Verifica Colisão**
+    private func detectCollision(_ newHead: (x: Int, y: Int)) -> Bool {
+        if model.isInvincible {
+            return false
+        }
+        
+        let collided = newHead.x < 0 || newHead.y < 0 ||
+        newHead.x >= gridSize || newHead.y >= gridSize ||
+        model.snake.contains(where: { $0 == newHead })
+        
+        if collided {
+            print("🚨 Colisão detectada! Posição: \(newHead.x), \(newHead.y)")
+        }
+        
+        return collided
+    }
+    
+    /// 🍏 **Cobra come Comida Normal**
     private func eatFood() {
-        model.food = (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize))
+        guard !hasWon else { return }
+        
         model.score += 10
         
+        var newFood: (x: Int, y: Int)?
+        
+        // 🔹 Criar lista de posições disponíveis
+        var availablePositions: [(x: Int, y: Int)] = []
+        
+        for x in 0..<gridSize {
+            for y in 0..<gridSize {
+                let pos = (x, y)
+                if !model.snake.contains(where: { $0 == pos }) &&
+                    !model.obstacles.contains(where: { $0 == pos }) {
+                    availablePositions.append(pos)
+                }
+            }
+        }
+        
+        // 🔹 Tenta escolher uma posição aleatória válida
+        if let randomPosition = availablePositions.randomElement() {
+            newFood = randomPosition
+            print("🍏 Nova comida gerada em: \(newFood!.x), \(newFood!.y)")
+        } else {
+            print("⚠️ Nenhum espaço disponível para gerar comida!")
+            newFood = (x: gridSize / 2, y: gridSize / 2) // Fallback
+        }
+        
+        model.food = newFood
+        
+        // ✅ Verifica se o jogador venceu
         if model.score >= winningScore || model.level >= maxLevel {
             hasWon = true
             timer?.cancel()
             return
         }
         
+        // ✅ Aumenta o nível e adiciona obstáculos se necessário
         if model.score % 50 == 0 && model.level < maxLevel {
             model.level += 1
-            increaseSpeed()
+            if gameModo != .easy {
+                spawnObstacles()
+            }
+            increaseSpeed() // Certifique-se de que a velocidade nunca diminua!
         }
     }
     
-    /// ✨ **Cobra come comida especial e cresce 2 quadrados**
+    /// ✨ **Cobra come Comida Especial e Cresce 2 Quadrados**
     private func eatSpecialFood() {
         model.score += 20
         specialFood = nil
         
         if let lastSegment = model.snake.last {
-            model.snake.append(lastSegment)
-            model.snake.append(lastSegment) // 🟡 Cresce 2x mais do que o normal
+            let newSegment = lastSegment
+            model.snake.append(newSegment)
+            model.snake.append(newSegment)
         }
         
-        // 🚀 Aumenta levemente a velocidade da cobra após comer comida especial
-        increaseSpeed(by: -0.08)
+        // ⚡️ Aumenta temporariamente a velocidade
+        let speedBoost: Double = 0.3
+        increaseSpeed(by: speedBoost)
+        
+        // Restaura a velocidade normal após 5 segundos
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8) { [weak self] in
+            guard let self = self else { return }
+            self.increaseSpeed(by: -speedBoost)
+            
+            // Gera uma nova comida especial depois de um tempo
+            DispatchQueue.main.asyncAfter(deadline: .now() + 8) { [weak self] in
+                self?.spawnSpecialFood()
+            }
+        }
     }
+    //   --------------------------------- Food Color --------------------------------------- //
+ 
+    private func startColorFoodSpawningLoop() {
+        let spawnInterval: TimeInterval = 25 // a cada 25 segundos
+        
+        colorFoodSpawner = Timer.publish(every: spawnInterval, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.spawnColorChangingFood()
+            }
+    }
+    
+    private func spawnColorChangingFood() {
+        var availablePositions: [(x: Int, y: Int)] = []
+        
+        for x in 0..<gridSize {
+            for y in 0..<(gridSize / 2) {
+                let pos = (x, y)
+                if !model.snake.contains(where: { $0 == pos }) &&
+                    !model.obstacles.contains(where: { $0 == pos }) {
+                    availablePositions.append(pos)
+                }
+            }
+        }
+        
+        guard let position = availablePositions.randomElement() else {
+            print("⚠️ Nenhuma posição livre para comida de cor!")
+            return
+        }
+        
+        colorChangingFood = position
+        print("🌈 Comida de cor spawnada em: \(position.x), \(position.y)")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+            if let currentFood = self?.colorChangingFood, currentFood == position {
+                self?.colorChangingFood = nil
+            }
+        }
+    }
+    
+    private func handleColorChangingEffect() {
+        model.score += 10
+        colorChangingFood = nil
+        
+        model.isInvincible = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+            self?.model.isInvincible = false
+        }
+        
+       let originalColor = snakeColor
+        
+        // 🌈 Efeito Arco-íris
+        let rainbowColors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink , .black]
+        var colorIndex = 0
+        let interval = 0.3
+        let duration: TimeInterval = 5.0
+        let totalChanges = Int(duration / interval)
+        var changeCount = 0
+        
+        rainbowTimer?.cancel() // evita múltiplos timers
+        rainbowTimer = Timer.publish(every: interval, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.snakeColor = rainbowColors[colorIndex % rainbowColors.count]
+                colorIndex += 1
+                changeCount += 1
+                
+                if changeCount >= totalChanges {
+                    self.snakeColor = originalColor
+                    self.rainbowTimer?.cancel()
+                    self.rainbowTimer = nil
+                }
+            }
+        
+        // Cresce 1 segmento
+        if let last = model.snake.last {
+            model.snake.append(last)
+        }
+    } 
+    
+    // ----------------------------------- Food Color Fim --------------------------------------- //
+    
     
     func changeDirection(to newDirection: Direction) {
         let currentDirection = model.direction
@@ -254,8 +504,7 @@ class SnakeViewModel: ObservableObject {
     }
     
     
-    // Função para aviar o usuário do aplicativo
-    
+    // Função para aviar o usuário do aplicativo ----------------------------------------------------------//
     func requestNotifications() {
         let center = UNUserNotificationCenter.current()
         
@@ -296,7 +545,7 @@ class SnakeViewModel: ObservableObject {
             "🔥 Você estava indo muito bem! Continue de onde parou!",
             "🎮 Hora de voltar ao jogo! Quem sabe você bate seu recorde!"
         ]
-        let randomMessage = messages.randomElement() ?? "🐍 Volte para o jogo!" // Escolhe uma mensagem aleatória
+        let randomMessage = messages.randomElement() ?? "🐍 Volte para o jogo!"
         
         let content = UNMutableNotificationContent()
         content.title = randomMessage
@@ -314,8 +563,8 @@ class SnakeViewModel: ObservableObject {
                 print("📢 Notificação agendada!")
             }
         }
-
-        // 🚀 Se o app estiver aberto, exibe um alerta na tela do Apple Watch
+        
+        // Se o app estiver aberto, exibe um alerta na tela do Apple Watch
         DispatchQueue.main.async {
             if let controller = WKExtension.shared().rootInterfaceController {
                 controller.presentAlert(
@@ -333,13 +582,14 @@ class SnakeViewModel: ObservableObject {
         }
     }
     
-    // Função para Cancelar Notificação
+   
     
     func cancelComeBackNotification() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["come_back"])
         print("🔕 Notificação cancelada!")
     }
-    
+ 
+    // ----------------------- Função para Cancelar Notificação ---------------------------------------- //
     
     /// 💣 **Gera uma bomba em posição aleatória**
     private func spawnBomb() {
@@ -363,7 +613,7 @@ class SnakeViewModel: ObservableObject {
             }
     }
     
-    /// 💣 **Cobra atinge a bomba e perde um Pedaço**
+    // --------------------------/// 💣 **Cobra atinge a bomba e perde um Pedaço** ------------------------------------------------------------//
     private func hitBomb() {
         bomb = nil // Remove a bomba após a colisão
         
@@ -372,9 +622,9 @@ class SnakeViewModel: ObservableObject {
         triggerHapticFeedback(type: .retry)
         
         if model.snake.count > 2 {
-            model.snake.removeLast() // 🔥 Cobra perde um pedaço
+            model.snake.removeLast()
         } else {
-            isGameOver = true // Se for muito pequena, perde o jogo!
+            isGameOver = true
             timer?.cancel()
         }
     }
@@ -382,7 +632,7 @@ class SnakeViewModel: ObservableObject {
     private func activateInvincibility() {
         isInvincible = true
         starPowerUp = nil
-        model.score += 10 // Bônus por pegar a estrela
+        model.score += 10 
         triggerHapticFeedback(type: .success)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // 🕒 Dura 5s
@@ -407,14 +657,17 @@ class SnakeViewModel: ObservableObject {
             self.starPowerUp = nil
         }
     }
+    
+    //  ------------------------------------------- Banco de Dados UserDefalt --------------------------------------------
+    
     private func saveHighScore() {
         let playerName = UserDefaults.standard.string(forKey: "playerName") ?? "Jogador"
         let score = model.score
         let level = model.level
         let modo = gameModo
         
-
+        
         DatabaseManager.shared.saveScore(playerName: playerName, score: score, level: level , modo: modo)
     }
-
 }
+

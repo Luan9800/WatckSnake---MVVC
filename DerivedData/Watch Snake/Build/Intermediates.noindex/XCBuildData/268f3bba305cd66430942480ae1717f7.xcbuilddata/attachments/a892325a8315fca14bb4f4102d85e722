@@ -1,0 +1,128 @@
+{
+  "" : {
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/Watch Snake Watch App-master.dia",
+    "emit-module-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/Watch Snake Watch App-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/Watch Snake Watch App-master-emit-module.dia",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/Watch Snake Watch App-master.swiftdeps"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Database/DatabaseManager.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/DatabaseManager~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Model/SnakeModel.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeModel~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/ViewModels/SnakeViewModel.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeViewModel~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/EnterPlayerNameView.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/EnterPlayerNameView~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/GameModeSelectionView.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameModeSelectionView~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/GameTutorialView.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/GameTutorialView~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/HighScoresView.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/HighScoresView~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/ParallaxBackground.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/ParallaxBackground~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/SnakeGameView.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeGameView~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/Views/SnakeHomeView.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/SnakeHomeView~partial.swiftmodule"
+  },
+  "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /WatchSnake Watch App/WatchSnakeApp.swift" : {
+    "const-values" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.swiftconstvalues",
+    "dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.d",
+    "diagnostics" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.dia",
+    "index-unit-output-path" : "/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.o",
+    "llvm-bc" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.bc",
+    "object" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.o",
+    "swift-dependencies" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp.swiftdeps",
+    "swiftmodule" : "/Users/luancarlos/Downloads/Swift Projetos/Watch Snake /DerivedData/Watch Snake/Build/Intermediates.noindex/Watch Snake.build/Debug-watchsimulator/Watch Snake Watch App.build/Objects-normal/arm64/WatchSnakeApp~partial.swiftmodule"
+  }
+}

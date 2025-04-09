@@ -1,19 +1,23 @@
 import SwiftUI
+import WatchKit
 
 struct SnakeHomeView: View {
-    var selectedMode: GameModo
     @State private var isActive = false
+    var selectedMode: GameModo
     
     var body: some View {
-      NavigationStack {
+        NavigationStack {
             ZStack {
+                Color.black
+                    .edgesIgnoringSafeArea(.all)
+                
                 if isActive {
-                    EnterPlayerNameView()
+                    GameTutorialView(isShowingTutorial: $isActive)
                 } else {
                     Image("snake_icon")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 280, height: 280)
+                        .frame(width: 270, height: 270)
                         .opacity(0.9)
                         .transition(.opacity)
                         .onAppear {
@@ -25,7 +29,8 @@ struct SnakeHomeView: View {
                         }
                 }
             }
-            .ignoresSafeArea()
+            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .automatic)
         }
     }
 }

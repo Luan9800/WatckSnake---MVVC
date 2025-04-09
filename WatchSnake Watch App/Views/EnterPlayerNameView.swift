@@ -2,15 +2,15 @@ import SwiftUI
 
 struct EnterPlayerNameView: View {
     @State private var isNavigating = false
-    @State private var playerName: String =
-    UserDefaults.standard.string(forKey: "playerName") ?? ""
-   
-  var body: some View {
+    @State private var playerName: String = UserDefaults.standard.string(forKey: "playerName") ?? "Jogador"
+    @State private var isGlowing = false
+    
+    var body: some View {
         NavigationStack {
             VStack(spacing: 4) {
                 Spacer()
                 
-                HStack(){
+                HStack {
                     Text("Snaker")
                         .font(.title3)
                         .bold()
@@ -22,32 +22,28 @@ struct EnterPlayerNameView: View {
                         .font(.title3)
                         .bold()
                         .padding(.top, 10)
-                    
                 }
-              
                 
-                TextField("Digite seu nome", text: $playerName)
-                    .textFieldStyle(.plain)
+                TextField("Digite seu nome", text: $playerName, onCommit: saveUserName)
                     .padding()
-                    .cornerRadius(20)
-                    .foregroundColor(.white)
-                    .padding(.horizontal,2)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 200)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.black.opacity(0.4)))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.green, lineWidth: 5)
-                        
+                            .stroke(isGlowing ? Color.red : Color.green, lineWidth: isGlowing ? 5 : 3)
+                            .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: isGlowing)
                     )
-                  //  .padding(.horizontal, 30)
+                    .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
+                    .onAppear {
+                        isGlowing.toggle()
+                    }
                 
                 Spacer()
                 
                 Button(action: {
                     if !playerName.isEmpty {
-                        UserDefaults.standard.set(playerName, forKey: "playerName")
+                        saveUserName()
                         isNavigating = true
                     }
                 }) {
@@ -55,22 +51,25 @@ struct EnterPlayerNameView: View {
                         .font(.title)
                         .frame(width: 45, height: 45)
                         .foregroundColor(.red)
-                    
                 }
                 .disabled(playerName.isEmpty)
+                .buttonStyle(.plain)
                 .padding(.bottom, 5)
             }
             .frame(maxHeight: 80)
             .padding(.horizontal, 20)
             .ignoresSafeArea()
-            .onAppear {
-                playerName = ""
-                
-            }
+            .navigationBarHidden(true)
             .navigationDestination(isPresented: $isNavigating) {
                 GameModeSelectionView()
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarHidden(true)
             }
         }
+    }
+    
+    func saveUserName() {
+        UserDefaults.standard.set(playerName, forKey: "playerName")
     }
 }
 

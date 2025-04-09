@@ -143,8 +143,6 @@
 			);
 			mainGroup = 7FEA4CCD2D5F7BCC0030AA85;
 			packageReferences = (
-				7F4AD5E12D88C5E10047BEB6 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				7F4AD5E52D88CF660047BEB6 /* XCLocalSwiftPackageReference "../realm-swift-master" */,
 			);
 			productRefGroup = 7FEA4CD52D5F7BCC0030AA85 /* Products */;
 			projectDirPath = "";
@@ -315,9 +313,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchSnake Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 99L25FT5GG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSnake;
@@ -328,8 +328,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dowloads.WatchSnake.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "-Users-luancarlos-Documents-Documentos---Luan-s-MacBook-Air-Swift-Projetos-Watch-Snake-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -344,9 +345,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchSnake Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 99L25FT5GG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSnake;
@@ -357,8 +360,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dowloads.WatchSnake.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "-Users-luancarlos-Documents-Documentos---Luan-s-MacBook-Air-Swift-Projetos-Watch-Snake-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -376,7 +380,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 99L25FT5GG;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSnake;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dowloads.WatchSnake;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -392,7 +396,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 99L25FT5GG;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSnake;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dowloads.WatchSnake;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -433,24 +437,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		7F4AD5E52D88CF660047BEB6 /* XCLocalSwiftPackageReference "../realm-swift-master" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../realm-swift-master";
-		};
-/* End XCLocalSwiftPackageReference section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		7F4AD5E12D88C5E10047BEB6 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 7FEA4CCE2D5F7BCC0030AA85 /* Project object */;
 }

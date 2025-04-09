@@ -1,17 +1,36 @@
 import SwiftUI
 
 struct HighScoresView: View {
-    @State private var scores: [HighScore] = DatabaseManager.shared.getTopScores()
+    @Binding var isPresented: Bool
+    @State private var scores: [HighScore] = []
     @State private var isLoading = false
-
+    @Environment(\.dismiss) var dismiss
+    
+    var selectedMode: GameModo
+    
     var body: some View {
         VStack(spacing: 10) {
-            Spacer()
-            Text("Pontuação 🏆")
-                .font(.title3)
-                .bold()
-                .padding(.top, -20)
-
+            ZStack {
+                Text("Pontuação 🏆")
+                    .font(.title3)
+                    .bold()
+                    .baselineOffset(2)
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                            .imageScale(.small)
+                            .foregroundColor(.red)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal)
+            .padding(.bottom, 10)
+            
             if isLoading {
                 Text("Carregando Pontuações..")
                     .foregroundColor(.gray)
@@ -27,12 +46,12 @@ struct HighScoresView: View {
                             Text(score.playerName)
                                 .fontWeight(.bold)
                                 .font(.headline)
-
+                            
                             HStack {
                                 Text("Modo: ")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
-
+                                
                                 Text(score.modo)
                                     .font(.subheadline)
                                     .fontWeight(.bold)
@@ -40,13 +59,12 @@ struct HighScoresView: View {
                             }
                         }
                         Spacer()
-                        // 🔥 Aqui corrigimos o alinhamento da pontuação
                         VStack {
                             Text("\(score.score)")
                                 .foregroundColor(.green)
                                 .font(.headline)
                                 .bold()
-
+                            
                             Text("pontos")
                                 .foregroundColor(.red)
                                 .font(.footnote)
@@ -58,20 +76,30 @@ struct HighScoresView: View {
             }
         }
         .onAppear {
-            scores = []
-            isLoading = true
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                let loadedScores = DatabaseManager.shared.getTopScores()
-                print("📊 Dados carregados:", loadedScores)
-
-                scores = loadedScores
+            Task {
+                scores = []
+                isLoading = true
+                
+                try? await Task.sleep(nanoseconds: 4_000_000_000)
+                scores = DatabaseManager.shared.getTopScores()
                 isLoading = false
+                
+                try? await Task.sleep(nanoseconds: 4_000_000_000)
+                
+                if isPresented {
+                    isPresented = false
+                } else {
+                    dismiss()
+                }
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden)
     }
 }
 
 #Preview {
-    HighScoresView()
+    NavigationStack {
+        HighScoresView(isPresented: .constant(true), selectedMode: .easy)
+    }
 }
