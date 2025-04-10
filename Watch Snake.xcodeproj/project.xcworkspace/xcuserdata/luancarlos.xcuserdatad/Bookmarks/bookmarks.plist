@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>1</string>
+					<string>257</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>0</string>
+					<string>257</string>
 					<key>Timestamp</key>
-					<string>765898732.458035</string>
+					<string>765917838.132789</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,15 +34,13 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>import SwiftUI
-</string>
-				<key>leading</key>
 				<string></string>
-				<key>trailing</key>
-				<string>import Combine
-import CloudKit
-import WatchKit
+				<key>leading</key>
+				<string>    SnakeGameView(selectedMode: .easy)
+}
 </string>
+				<key>trailing</key>
+				<string></string>
 			</dict>
 			<key>type</key>
 			<string>bookmark</string>
@@ -55,13 +53,13 @@ import WatchKit
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>1</string>
+					<string>257</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>0</string>
+					<string>257</string>
 					<key>Timestamp</key>
-					<string>765898732.457673</string>
+					<string>765917838.132707</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -77,15 +75,13 @@ import WatchKit
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>import SwiftUI
-</string>
-				<key>leading</key>
 				<string></string>
-				<key>trailing</key>
-				<string>import Combine
-import CloudKit
-import WatchKit
+				<key>leading</key>
+				<string>    SnakeGameView(selectedMode: .easy)
+}
 </string>
+				<key>trailing</key>
+				<string></string>
 			</dict>
 			<key>type</key>
 			<string>bookmark</string>
@@ -98,13 +94,13 @@ import WatchKit
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>1</string>
+					<string>257</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>0</string>
+					<string>257</string>
 					<key>Timestamp</key>
-					<string>765898732.457994</string>
+					<string>765917838.132779</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -120,15 +116,13 @@ import WatchKit
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>import SwiftUI
-</string>
-				<key>leading</key>
 				<string></string>
-				<key>trailing</key>
-				<string>import Combine
-import CloudKit
-import WatchKit
+				<key>leading</key>
+				<string>    SnakeGameView(selectedMode: .easy)
+}
 </string>
+				<key>trailing</key>
+				<string></string>
 			</dict>
 			<key>type</key>
 			<string>bookmark</string>

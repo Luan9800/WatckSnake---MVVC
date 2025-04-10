@@ -35,7 +35,8 @@ class SnakeViewModel: ObservableObject {
     let winningScore = 300
     
     // 🟡 Comida especial que some rápido
-    init() {
+    init(mode: GameModo) {
+        self.gameModo = mode
         self.model = SnakeModel(
             snake: [(5, 5)],
             food: nil,
@@ -91,12 +92,6 @@ class SnakeViewModel: ObservableObject {
             isPaused = false
             adjustSpeed()
         }
-    }
-    
-    @MainActor
-    func setGameModo(_ modo: GameModo) {
-        self.gameModo = modo
-        startGameLoop()
     }
     
     /// 🔄 **Inicia ou reinicia o jogo**

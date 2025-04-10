@@ -1,4 +1,5 @@
 import SwiftUI
+import WatchKit
 
 struct GameModeSelectionView: View {
     @AppStorage("isPremiumUser") private var isPremiumUser: Bool = true
@@ -13,9 +14,6 @@ struct GameModeSelectionView: View {
 
                     NavigationLink(destination: SnakeGameView(selectedMode: .easy)) {
                         Text("Fácil")
-                            .onTapGesture {
-                                print("botão facil tocado")
-                            }
                             .font(.title3)
                             .bold()
                             .padding()

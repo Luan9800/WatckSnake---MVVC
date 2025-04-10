@@ -1,17 +1,21 @@
 import SwiftUI
 import Combine
-import CloudKit
 import WatchKit
 import Foundation
 
 struct SnakeGameView: View {
-    @StateObject private var viewModel =
-    SnakeViewModel()
+    @StateObject private var viewModel: SnakeViewModel
     @State private var showRanking = false
     @State private var animateColorFood = false
-    var isPreview: Bool = false
     @State private var snakeBlockSize: CGFloat = 12
-    var selectedMode: GameModo
+    let selectedMode: GameModo
+    var isPreview: Bool = false
+
+       init(selectedMode: GameModo, viewModel: SnakeViewModel? = nil, isPreview: Bool = false) {
+           _viewModel = StateObject(wrappedValue: viewModel ?? SnakeViewModel(mode: selectedMode))
+           self.selectedMode = selectedMode
+           self.isPreview = isPreview
+       }
     
     var body: some View {
         NavigationStack {
@@ -248,8 +252,6 @@ struct GridStack<Content: View>: View {
     }
 }
 
-struct SnakeGameView_Previews: PreviewProvider {
-    static var previews: some View {
-        SnakeGameView(selectedMode: .easy)
-    }
+#Preview {
+    SnakeGameView(selectedMode: .easy)
 }
