@@ -7,6 +7,7 @@ struct SnakeGameView: View {
     @StateObject private var viewModel: SnakeViewModel
     @State private var showRanking = false
     @State private var animateColorFood = false
+    @State private var flashBackground = false
     @State private var snakeBlockSize: CGFloat = 12
     let selectedMode: GameModo
     var isPreview: Bool = false
@@ -16,7 +17,6 @@ struct SnakeGameView: View {
            self.selectedMode = selectedMode
            self.isPreview = isPreview
        }
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -164,7 +164,7 @@ private func gameGridView() -> some View {
                 .foregroundColor(getCellColor(row: row, col: col))
                 .frame(width: 13.5, height: 15.8)
                 .animation(.easeInOut(duration: 0.3), value: snakeBlockSize)
-            //.frame(width: 12, height: 12)
+
                 .overlay(
                     Group {
                         if viewModel.specialFood?.x == col && viewModel.specialFood?.y == row {

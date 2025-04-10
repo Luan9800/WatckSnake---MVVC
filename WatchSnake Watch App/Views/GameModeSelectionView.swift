@@ -9,8 +9,8 @@ struct GameModeSelectionView: View {
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
-                VStack(spacing: geometry.size.height * 0.015) {
-                    Spacer()
+                VStack(spacing: geometry.size.height * 0.02) {
+                  //  Spacer()
 
                     NavigationLink(destination: SnakeGameView(selectedMode: .easy)) {
                         Text("Fácil")
