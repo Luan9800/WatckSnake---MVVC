@@ -23,12 +23,6 @@ enum GameModo: String {
     }
 }
 
-// Monster do Game
-struct Monster {
-    var position: CGPoint
-    var direction: Direction
-}
-
 struct ScreenSize {
     static let width = WKInterfaceDevice.current().screenBounds.width
     static let height = WKInterfaceDevice.current().screenBounds.height

@@ -113,17 +113,18 @@ private func victoryView() -> some View {
     private func gameInfoView() -> some View {
         
         VStack(spacing: 6) {
-            Text("Pontuação: \(viewModel.model.score)")
-                .font(.system(size: 18, weight: .bold, design: .monospaced))
+            Text("Pontuação: \(max(viewModel.model.score, 0))")
+                .font(.system(size: 20, weight: .bold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .foregroundColor(.white)
             
-            Text("Nível: \(viewModel.model.level)")
-                .font(.system(size: 18, weight: .bold, design: .monospaced))
+            Text("Nível: \(max(viewModel.model.level, 1))")
+                .font(.system(size: 20, weight: .bold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .foregroundColor(.white)
+        
             
             HStack(spacing: 12) {
                 Button(action: {

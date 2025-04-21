@@ -13,7 +13,6 @@ class SnakeViewModel: ObservableObject {
     @Published var gameModo: GameModo = .easy
     @Published var starPowerUp: (x: Int, y: Int)?
     @Published var isInvincible: Bool = false
-    @Published var monster = Monster(position: CGPoint(x: 100, y: 100), direction: .right)
     @Published var colorChangingFood: (x: Int, y: Int)? = nil
     @Published var snakeColor: Color = .green
     
@@ -131,7 +130,7 @@ class SnakeViewModel: ObservableObject {
         let baseSpeed: TimeInterval = {
             switch gameModo {
             case .easy: return 0.65
-            case .medium: return 0.55
+            case .medium: return 0.45
             case .hard: return 0.35
             case .expert : return 0.25
             }

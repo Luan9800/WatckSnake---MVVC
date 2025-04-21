@@ -2,9 +2,9 @@ import SwiftUI
 
 struct EnterPlayerNameView: View {
     @State private var isNavigating = false
-    @State private var playerName: String = UserDefaults.standard.string(forKey: "playerName") ?? "Jogador"
     @State private var isGlowing = false
-    
+    @State private var playerName: String = UserDefaults.standard.string(forKey: "playerName") ?? "Jogador"
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 4) {
