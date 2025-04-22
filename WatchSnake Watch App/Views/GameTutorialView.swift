@@ -9,13 +9,13 @@ struct GameTutorialView: View {
         NavigationStack {
             GeometryReader { geometry in
                 ScrollView {
-                    VStack(spacing: geometry.size.height * 0.01) {
+                    VStack(spacing: geometry.size.height * 0.010) {
                         Text("Como Jogar 🐍")
                             .font(.system(size: geometry.size.width * 0.12))
                             .padding(.top, geometry.size.height * 0.02)
                             .bold()
                         Spacer()
-                        VStack(alignment: .leading, spacing: geometry.size.height * 0.01) {
+                        VStack(alignment: .leading, spacing: geometry.size.height * 0.03) {
                             Text("🎯 **Objetivo**")
                                 .font(.system(size: geometry.size.width * 0.08))
                                 .bold()
@@ -73,13 +73,19 @@ struct GameTutorialView: View {
                                     .font(.system(size: geometry.size.width * 0.07))
                             }
                             HStack {
+                                Image(systemName: "square.fill")
+                                    .foregroundColor(.orange)
+                                    .imageScale(.small)
+                                Text(" Comida Laranja (Desacelerar a cobrinha durante o jogo)")
+                                    .font(.system(size: geometry.size.width * 0.07))
+                            }
+                            HStack {
                                 Image(systemName: "rectangle.portrait.and.arrow.right")
                                     .foregroundColor(.red)
                                     .imageScale(.small)
                                 Text("Fechar tela de Pontuação (Sair)")
                                     .font(.system(size: geometry.size.width * 0.07))
                             }
-                            
                         }
                         .padding(.horizontal, geometry.size.width * 0.05)
                         

@@ -80,11 +80,11 @@ struct HighScoresView: View {
                 scores = []
                 isLoading = true
                 
-                try? await Task.sleep(nanoseconds: 4_000_000_000)
+                try? await Task.sleep(nanoseconds: 8_000_000_000)
                 scores = DatabaseManager.shared.getTopScores()
                 isLoading = false
                 
-                try? await Task.sleep(nanoseconds: 4_000_000_000)
+                try? await Task.sleep(nanoseconds: 8_000_000_000)
                 
                 if isPresented {
                     isPresented = false

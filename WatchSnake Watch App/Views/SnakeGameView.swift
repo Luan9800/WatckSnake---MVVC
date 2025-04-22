@@ -5,18 +5,22 @@ import Foundation
 
 struct SnakeGameView: View {
     @StateObject private var viewModel: SnakeViewModel
+    @State private var snakeBlockSize: CGFloat = 13.5
     @State private var showRanking = false
     @State private var animateColorFood = false
     @State private var flashBackground = false
-    @State private var snakeBlockSize: CGFloat = 12
+    @State private var foodslow = false
+    
     let selectedMode: GameModo
     var isPreview: Bool = false
+    
 
        init(selectedMode: GameModo, viewModel: SnakeViewModel? = nil, isPreview: Bool = false) {
            _viewModel = StateObject(wrappedValue: viewModel ?? SnakeViewModel(mode: selectedMode))
            self.selectedMode = selectedMode
            self.isPreview = isPreview
        }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -114,13 +118,13 @@ private func victoryView() -> some View {
         
         VStack(spacing: 6) {
             Text("Pontuação: \(max(viewModel.model.score, 0))")
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: 19, weight: .bold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .foregroundColor(.white)
             
             Text("Nível: \(max(viewModel.model.level, 1))")
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: 19, weight: .bold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .foregroundColor(.white)
@@ -178,6 +182,11 @@ private func gameGridView() -> some View {
                                 .scaleEffect(animateColorFood ? 1.2 : 0.9)
                                 .opacity(0.6)
                                 .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: animateColorFood)
+                        } else if let slowFood = viewModel.foodslow, slowFood.0 == col && slowFood.1 == row {
+                            Circle()
+                                .fill(Color.orange)
+                                .frame(width: 10, height: 10)
+                                .shadow(color: .orange, radius: 1.5)
                         }
                     }
                 )
@@ -213,22 +222,24 @@ private func pausedView() -> some View {
 }
 
 private func getCellColor(row: Int, col: Int) -> Color {
-    if viewModel.model.snake.contains(where: { $0.x == col && $0.y == row }) {
-        return viewModel.snakeColor
-    } else if let food = viewModel.model.food, food.x == col && food.y == row {
-        return .red
-    } else if let specialFood = viewModel.specialFood, specialFood.x == col && specialFood.y == row {
-        return .yellow.opacity(0.8)
-    } else if let bomb = viewModel.bomb, bomb.x == col && bomb.y == row {
-        return .gray
-    } else if viewModel.model.obstacles.contains(where: { $0.x == col && $0.y == row }) {
-        return .white
-    } else if let colorFood = viewModel.colorChangingFood, colorFood.x == col && colorFood.y == row {
-        return .purple
-    } else {
-        return .black
+        if viewModel.model.snake.contains(where: { $0.x == col && $0.y == row }) {
+            return viewModel.snakeColor
+        } else if let food = viewModel.model.food, food.x == col && food.y == row {
+            return .red
+        } else if let specialFood = viewModel.specialFood, specialFood.x == col && specialFood.y == row {
+            return .yellow.opacity(0.8)
+        } else if let bomb = viewModel.bomb, bomb.x == col && bomb.y == row {
+            return .gray
+        } else if viewModel.model.obstacles.contains(where: { $0.x == col && $0.y == row }) {
+            return .white
+        } else if let colorFood = viewModel.colorChangingFood, colorFood.x == col && colorFood.y == row {
+            return .purple
+        } else if let foodslow = viewModel.model.foodslow, foodslow.x == col && foodslow.y == row {
+            return .orange
+        } else {
+            return .black
+        }
     }
-}
 
 private func triggerHapticFeedback(type: WKHapticType) {
     WKInterfaceDevice.current().play(type)

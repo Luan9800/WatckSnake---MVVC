@@ -61,6 +61,7 @@ struct SnakeModel {
     var monster: [(x: Int, y: Int)] = [(5, 5), (5, 6), (5, 7), (5, 8)]
     var starPowerUp: (x: Int, y: Int)?
     var isInvincible: Bool = false
+    var foodslow: (x: Int, y: Int)?
     
     /// ⏳ **Tempo jogado**
     var elapsedTime: TimeInterval {

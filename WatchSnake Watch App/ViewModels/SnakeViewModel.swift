@@ -15,6 +15,8 @@ class SnakeViewModel: ObservableObject {
     @Published var isInvincible: Bool = false
     @Published var colorChangingFood: (x: Int, y: Int)? = nil
     @Published var snakeColor: Color = .green
+    @Published var foodslow:(x: Int, y: Int)?
+    @Published var isSlowed : Bool = false
     
     private var timer: AnyCancellable?
     private var bombaTimer: AnyCancellable?
@@ -27,6 +29,8 @@ class SnakeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var eatColorChangingFood : AnyCancellable?
     private var rainbowTimer: AnyCancellable?
+    private var originalSpeed: TimeInterval?
+    private var slowFoodTimer: AnyCancellable?
     
     
     let gridSize = 15
@@ -107,7 +111,9 @@ class SnakeViewModel: ObservableObject {
             direction: .right,
             score: 0,
             level: 1,
-            startTime: Date()
+            startTime: Date(),
+            foodslow: (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10))
+
         )
         specialFood = nil
         
@@ -120,6 +126,8 @@ class SnakeViewModel: ObservableObject {
           startColorFoodSpawningLoop()
           schedulePowerUp()
           spawnColorChangingFood()
+          handleSlowFoodEffect()
+          spawnSlowFood()
         
     }
     
@@ -205,7 +213,15 @@ class SnakeViewModel: ObservableObject {
             return
         }
         
-        model.snake.insert(newHead, at: 0) // Adiciona a nova cabeça
+        // Adiciona a nova cabeça
+        model.snake.insert(newHead, at: 0)
+        
+        // 🟠 Comida desacelera (precisa vir antes do removeLast())
+        if let foodslow = model.foodslow, newHead == foodslow {
+            model.foodslow = nil
+            handleSlowFoodEffect()
+            // Não retorna aqui — deixa continuar para possível crescimento
+        }
         
         // 🍎 Comer comida normal
         if let food = model.food, newHead == food {
@@ -234,12 +250,13 @@ class SnakeViewModel: ObservableObject {
             return
         }
         
-       // 🌈 Comida de cor
-          if let colorFood = colorChangingFood, newHead == colorFood {
-          handleColorChangingEffect()
-          return
+        // 🌈 Comida de cor
+        if let colorFood = colorChangingFood, newHead == colorFood {
+            handleColorChangingEffect()
+            return
         }
         
+        // 🔚 Remove a cauda se não comeu nada que faria crescer
         if !isGameOver {
             model.snake.removeLast()
         }
@@ -609,7 +626,7 @@ class SnakeViewModel: ObservableObject {
     
     // --------------------------/// 💣 **Cobra atinge a bomba e perde um Pedaço** ------------------------------------------------------------//
     private func hitBomb() {
-        bomb = nil // Remove a bomba após a colisão
+        bomb = nil
         
         // 📳 Vibração no relógio
         triggerHapticFeedback(type: .failure)
@@ -629,7 +646,7 @@ class SnakeViewModel: ObservableObject {
         model.score += 10 
         triggerHapticFeedback(type: .success)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // 🕒 Dura 5s
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             self.isInvincible = false
         }
     }
@@ -647,12 +664,83 @@ class SnakeViewModel: ObservableObject {
         guard starPowerUp == nil else { return }
         starPowerUp = (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 8) { // Some após 5 segundos
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
             self.starPowerUp = nil
         }
     }
     
-    //  ------------------------------------------- Banco de Dados UserDefalt --------------------------------------------
+  // ------------------------------------ Função para desacelerar a Cobrinha ---------------------------//
+    private func handleSlowFoodEffect() {
+        guard originalSpeed == nil else { return }
+
+        originalSpeed = currentInterval
+        let slowInterval = currentInterval + 0.3
+
+        print("🍊 Slow food effect ativado! Intervalo antigo: \(originalSpeed ?? 0), novo: \(slowInterval)")
+
+        isSlowed = true
+
+        timer?.cancel()
+        currentInterval = slowInterval
+
+        timer = Timer.publish(every: currentInterval, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.moveSnake()
+            }
+
+        // Restaura após 3 segundos
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.restoreOriginalSpeed()
+        }
+
+        // 🟠 Gera uma nova comida lenta após 10 segundos
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+            self?.spawnSlowFood()
+        }
+    }
+
+    private func restoreOriginalSpeed() {
+        guard let original = originalSpeed else { return }
+        print("⚡️ Velocidade restaurada para \(currentInterval)")
+        
+        isSlowed = false
+        
+        timer?.cancel()
+        currentInterval = original
+        originalSpeed = nil
+        
+        timer = Timer.publish(every: currentInterval, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.moveSnake()
+        }
+    }
+    
+    
+    private func spawnSlowFood() {
+        guard model.foodslow == nil else { return }
+
+        let allPositions = (0..<gridSize).flatMap { x in (0..<gridSize).map { y in (x, y) } }
+
+        let availablePositions = allPositions.filter { pos in
+            let notOnSnake = !model.snake.contains(where: { $0 == pos })
+            let notOnObstacle = !model.obstacles.contains(where: { $0 == pos })
+            let notOnFood = model.food.map({ $0 != pos }) ?? true
+            let notOnSpecial = specialFood.map({ $0 != pos }) ?? true
+            let notOnColorChanging = colorChangingFood.map({ $0 != pos }) ?? true
+
+            return notOnSnake && notOnObstacle && notOnFood && notOnSpecial && notOnColorChanging
+        }
+
+        if let position = availablePositions.randomElement() {
+            model.foodslow = position
+            print("🟠 Slow food apareceu em: \(position.0), \(position.1)")
+        }
+    }
+    
+    
+    //  ---------------------------------- Banco de Dados UserDefalt ----------------------------------
     
     private func saveHighScore() {
         let playerName = UserDefaults.standard.string(forKey: "playerName") ?? "Jogador"
