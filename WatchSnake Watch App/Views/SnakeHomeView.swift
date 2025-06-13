@@ -18,7 +18,6 @@ struct SnakeHomeView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 270, height: 270)
-                       // .frame(width: 270, height: 270)
                         .opacity(0.9)
                         .transition(.opacity)
                         .onAppear {
