@@ -739,7 +739,6 @@ class SnakeViewModel: ObservableObject {
         }
     }
     
-    
     //  ---------------------------------- Banco de Dados UserDefalt ----------------------------------
     
     private func saveHighScore() {
