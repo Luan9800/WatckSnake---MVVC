@@ -25,7 +25,11 @@ struct EnterPlayerNameView: View {
                         .padding(.top, 10)
                 }
                 
-                TextField("Digite seu nome", text: $playerName, onCommit: saveUserName)
+                TextField(
+                    playerName.isEmpty ? "Digite seu nome" : "",
+                    text: $playerName,
+                    onCommit: saveUserName
+                )
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 20).fill(Color.black.opacity(0.4)))
                     .overlay(
@@ -44,7 +48,9 @@ struct EnterPlayerNameView: View {
                 Spacer()
                 
                 Button(action: {
-                    if !playerName.isEmpty {
+                    let trimmed = playerName.trimmingCharacters(in: .whitespaces)
+                    if !trimmed.isEmpty && trimmed.count > 2 {
+                        playerName = trimmed
                         saveUserName()
                         isNavigating = true
                     }
@@ -61,7 +67,7 @@ struct EnterPlayerNameView: View {
             .frame(maxHeight: 80)
             .padding(.horizontal, 20)
             .ignoresSafeArea()
-            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .automatic)
             .navigationDestination(isPresented: $isNavigating) {
                 GameModeSelectionView()
                     .navigationBarBackButtonHidden(true)
