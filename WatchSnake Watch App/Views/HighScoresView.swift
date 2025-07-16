@@ -65,9 +65,9 @@ struct HighScoresView: View {
                                 .font(.headline)
                                 .bold()
                             
-                            Text("pontos")
-                                .foregroundColor(.red)
-                                .font(.footnote)
+                            Text("Pontos")
+                                .foregroundColor(.orange)
+                               // .font(.footnote)
                         }
                     }
                     .padding(.vertical, 8)

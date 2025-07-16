@@ -2,32 +2,46 @@ import Foundation
 import WatchKit
 import SwiftUI
 
+// MARK: - Direção da Cobra
 enum Direction {
     case up, down, left, right
 }
 
-enum GameModo: String {
+// MARK: - Modos de Jogo
+enum GameModo: String, CaseIterable {
     case easy = "Fácil"
     case medium = "Médio"
     case hard = "Difícil"
     case expert = "Experiente"
-    
+
+    /// Cor associada ao modo
     var color: Color {
         switch self {
         case .easy: return .green
         case .medium: return .orange
         case .hard: return .red
         case .expert: return .purple
-            
+        }
+    }
+
+    /// Velocidade base usada para ajustar timers
+    var baseSpeed: TimeInterval {
+        switch self {
+        case .easy: return 0.65
+        case .medium: return 0.45
+        case .hard: return 0.35
+        case .expert: return 0.25
         }
     }
 }
 
+// MARK: - Tamanho da Tela do Apple Watch
 struct ScreenSize {
     static let width = WKInterfaceDevice.current().screenBounds.width
     static let height = WKInterfaceDevice.current().screenBounds.height
 }
 
+// MARK: - Estrutura de Pontuação (Ranking)
 struct HighScore: Identifiable, Codable, Hashable {
     let id: UUID
     let playerName: String
@@ -35,7 +49,7 @@ struct HighScore: Identifiable, Codable, Hashable {
     let level: Int
     let modo: String
     let date: Date
-    
+
     init(id: UUID = UUID(), playerName: String, score: Int, level: Int, modo: String, date: Date) {
         self.id = id
         self.playerName = playerName
@@ -46,34 +60,40 @@ struct HighScore: Identifiable, Codable, Hashable {
     }
 }
 
-// 🐍 **Modelo do jogo Snake**
+// MARK: - Modelo do Jogo Snake
 struct SnakeModel {
+    // Estado do jogo
     var snake: [(x: Int, y: Int)]
     var food: (x: Int, y: Int)?
     var foods: [(x: Int, y: Int)] = []
+
+    // Elementos especiais
     var specialFood: (x: Int, y: Int)?
     var colorChangingFood: (x: Int, y: Int)?
+    var starPowerUp: (x: Int, y: Int)?
+    var foodslow: (x: Int, y: Int)?
+
+    // Propriedades do jogador
     var direction: Direction
     var score: Int
     var level: Int
-    var startTime: Date
-    var obstacles: [(x: Int, y: Int)] = []
-    var monster: [(x: Int, y: Int)] = [(5, 5), (5, 6), (5, 7), (5, 8)]
-    var starPowerUp: (x: Int, y: Int)?
     var isInvincible: Bool = false
-    var foodslow: (x: Int, y: Int)?
-    
-    /// ⏳ **Tempo jogado**
+
+    // Obstáculos e tempo
+    var obstacles: [(x: Int, y: Int)] = []
+    var startTime: Date
+
+    // Tempo decorrido desde o início
     var elapsedTime: TimeInterval {
-        return Date().timeIntervalSince(startTime)
+        Date().timeIntervalSince(startTime)
     }
-    
-    /// 🔄 **Resetar o jogo**
+
+    // MARK: - Resetar o jogo
     mutating func resetGame() {
         self = SnakeModel.newGame()
     }
-    
-    /// 📊 **Criar uma instância inicial do jogo**
+
+    // MARK: - Criar nova instância do jogo
     static func newGame() -> SnakeModel {
         return SnakeModel(
             snake: [(5, 5)],
@@ -82,10 +102,16 @@ struct SnakeModel {
                 (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10)),
                 (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10))
             ],
+            specialFood: nil,
+            colorChangingFood: nil,
+            starPowerUp: nil,
+            foodslow: nil,
             direction: .right,
             score: 0,
             level: 1,
+            isInvincible: false,
+            obstacles: [],
             startTime: Date()
         )
     }
-} 
+}

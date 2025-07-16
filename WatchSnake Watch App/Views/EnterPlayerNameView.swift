@@ -1,9 +1,10 @@
 import SwiftUI
+import WatchKit
 
 struct EnterPlayerNameView: View {
     @State private var isNavigating = false
     @State private var isGlowing = false
-    @State private var playerName: String = UserDefaults.standard.string(forKey: "playerName") ?? "Jogador"
+    @State private var playerName: String = ""
 
     var body: some View {
         NavigationStack {
@@ -37,6 +38,7 @@ struct EnterPlayerNameView: View {
                     .frame(maxWidth: 200)
                     .onAppear {
                         isGlowing.toggle()
+                        autoFillUserNameIfPossible()
                     }
                 
                 Spacer()
@@ -68,8 +70,31 @@ struct EnterPlayerNameView: View {
         }
     }
     
-    func saveUserName() {
+    private func saveUserName() {
         UserDefaults.standard.set(playerName, forKey: "playerName")
+    }
+    
+    private func autoFillUserNameIfPossible() {
+        let savedName = UserDefaults.standard.string(forKey: "playerName") ?? ""
+        guard savedName.isEmpty else {
+            playerName = savedName
+            return
+        }
+
+        let deviceName = WKInterfaceDevice.current().name
+        if let name = extractName(from: deviceName) {
+            playerName = name
+            saveUserName()
+        }
+    }
+
+    /// Exemplo: "Apple Watch de João" → "João"
+    private func extractName(from deviceName: String) -> String? {
+        if let range = deviceName.range(of: " de ") {
+            let name = deviceName[range.upperBound...].trimmingCharacters(in: .whitespaces)
+            return name.isEmpty ? nil : name
+        }
+        return nil
     }
 }
 

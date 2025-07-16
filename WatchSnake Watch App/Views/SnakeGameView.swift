@@ -8,12 +8,15 @@ struct SnakeGameView: View {
     @State private var snakeBlockSize: CGFloat = 13.5
     @State private var showRanking = false
     @State private var animateColorFood = false
+    @State var animateSkull = false
     @State private var flashBackground = false
+    @State private var skullColorToggle = false
     @State private var foodslow = false
     
     let selectedMode: GameModo
     var isPreview: Bool = false
     
+    @Environment(\.dismiss) private var dismiss
 
        init(selectedMode: GameModo, viewModel: SnakeViewModel? = nil, isPreview: Bool = false) {
            _viewModel = StateObject(wrappedValue: viewModel ?? SnakeViewModel(mode: selectedMode))
@@ -25,7 +28,7 @@ struct SnakeGameView: View {
         NavigationStack {
             ZStack {
                 Color.black.ignoresSafeArea()
-                ParallaxBackground()
+                     ParallaxBackground()
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
@@ -43,21 +46,24 @@ struct SnakeGameView: View {
                 .padding(.bottom, 5)
                 .buttonStyle(PlainButtonStyle())
             }
-            
             .onAppear {
-                       #if DEBUG
-                       if !ProcessInfo.processInfo.environment.keys.contains("XCODE_RUNNING_FOR_PREVIEWS") {
-                           viewModel.startGameLoop()
-                       }
-                       #else
-                       viewModel.startGame()
-                       #endif
-                   }
-                   .onChange(of: viewModel.isInvincible) { _, _ in
-                       withAnimation(.easeInOut(duration: 0.3)) {
-                           snakeBlockSize = viewModel.isInvincible ? 18 : 13.5
-                       }
-                   }
+                #if DEBUG
+                if !ProcessInfo.processInfo.environment.keys.contains("XCODE_RUNNING_FOR_PREVIEWS") {
+                    viewModel.startGameLoop()
+                }
+                #else
+                viewModel.startGame()
+                #endif
+
+                viewModel.onSuggestDifficultyChange = {
+                    dismiss()
+                }
+            }
+            .onChange(of: viewModel.isInvincible) { _, _ in
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    snakeBlockSize = viewModel.isInvincible ? 18 : 13.5
+                }
+            }
                    .gesture(
                        DragGesture()
                            .onEnded { gesture in
@@ -72,7 +78,6 @@ struct SnakeGameView: View {
                                triggerHapticFeedback(type: .directionUp)
                            }
                    )
-                   // 👇 Coloque aqui, ainda DENTRO do NavigationStack
                    .navigationDestination(isPresented: $showRanking) {
                        HighScoresView(isPresented: $showRanking, selectedMode: selectedMode)
                    }
@@ -81,26 +86,35 @@ struct SnakeGameView: View {
                }
            }
     
-private func gameOverView() -> some View {
-    VStack(spacing: 12) {
-        Text("☠️ Perdeu")
-            .font(.title2)
-            .bold()
-            .foregroundColor(.red)
-            .opacity(0.9)
-            .padding(.top, 8)
-        
-        gameInfoView()
+    private func gameOverView() -> some View {
+        VStack(spacing: 10) {
+            Text("☠️")
+                .font(.system(size: 40))
+                .scaleEffect(animateSkull ? 1.2 : 1.0)
+                .opacity(animateSkull ? 1.0 : 0.6)
+                .foregroundColor(skullColorToggle ? .red : .green)
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
+                        animateSkull = true
+                    }
+                    // Anima a troca de cor
+                    Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { _ in
+                        skullColorToggle.toggle()
+                    }
+                }
+
+            gameInfoView()
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 40)
+                .fill(Color.black.opacity(0.1))
+                .shadow(radius: 2)
+                .padding(.vertical, 10)
+        )
+        .padding(.horizontal, 5)
     }
-    .frame(maxWidth: .infinity)
-    .padding()
-    .background(
-        RoundedRectangle(cornerRadius: 15)
-            .fill(Color.black.opacity(0.7))
-            .shadow(radius: 5)
-    )
-    .padding(.horizontal, 10)
-}
 
 private func victoryView() -> some View {
     VStack {
@@ -113,55 +127,78 @@ private func victoryView() -> some View {
         gameInfoView()
     }
 }
-
     private func gameInfoView() -> some View {
-        
-        VStack(spacing: 6) {
-            Text("Pontuação: \(max(viewModel.model.score, 0))")
-                .font(.system(size: 19, weight: .bold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
-                .foregroundColor(.white)
-            
-            Text("Nível: \(max(viewModel.model.level, 1))")
-                .font(.system(size: 19, weight: .bold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
-                .foregroundColor(.white)
-        
-            
-            HStack(spacing: 12) {
-                Button(action: {
-                    viewModel.startGameLoop()
-                    triggerHapticFeedback(type: .success)
-                }) {
-                    Text("🔄")
-                        .font(.title2)
-                        .bold()
-                        .padding(6)
-                        .foregroundColor(.white)
-                }
+        GeometryReader { geometry in
+            let minSide = min(geometry.size.width, geometry.size.height)
+            let fontSize = max(minSide * 0.12, 15)
+            let iconSize = max(minSide * 0.12, 30)
+            let spacing = max(minSide * 0.05, 8)
+            let buttonSize = max(minSide * 0.28, 44)
+
+            VStack(spacing: spacing) {
                 
-                Button(action: {
-                    showRanking = true
-                }) {
-                    Text("🏆")
-                        .font(.title2)
-                        .bold()
-                        .padding(6)
+                // Pontuação
+                (
+                    Text("Pontuação: ")
                         .foregroundColor(.white)
+                    +
+                    Text("\(max(viewModel.model.score, 0))")
+                        .foregroundColor(.green)
+                )
+                .font(.system(size: fontSize, weight: .bold))
+                .minimumScaleFactor(0.8)
+                .accessibilityLabel("Pontuação: \(viewModel.model.score)")
+
+                // Nível
+                (
+                    Text("Nível: ")
+                        .foregroundColor(.white)
+                    +
+                    Text("\(max(viewModel.model.level, 1))")
+                        .foregroundColor(.yellow)
+                )
+                .font(.system(size: fontSize, weight: .bold))
+                .minimumScaleFactor(0.8)
+                .accessibilityLabel("Nível: \(viewModel.model.level)")
+            
+
+
+                HStack(spacing: spacing) {
+                    Button(action: {
+                        viewModel.startGameLoop()
+                        triggerHapticFeedback(type: .success)
+                    }) {
+                        Text("🔄")
+                            .font(.system(size: iconSize))
+                            .frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(.black)
+                            .accessibilityLabel("Reiniciar")
+                    }
+
+                    Button(action: {
+                        showRanking = true
+                    }) {
+                        Text("🏆")
+                            .font(.system(size: iconSize))
+                            .frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(.black)
+                            .accessibilityLabel("Ver Ranking")
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.horizontal)
+            .padding(.vertical, spacing)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.black.opacity(0.6))
+                    .shadow(radius: 4)
+            )
         }
-        .padding()
-        .buttonStyle(.plain)
-        .background(
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color.black.opacity(0.6))
-                .shadow(radius: 5)
-        )
-        .padding(.horizontal, 10)
+        .frame(height: 140)
     }
+
+    
 private func gameGridView() -> some View {
     VStack {
         GridStack(rows: viewModel.gridSize, columns: viewModel.gridSize) { row, col in

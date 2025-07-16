@@ -17,13 +17,13 @@ class SnakeViewModel: ObservableObject {
     @Published var snakeColor: Color = .green
     @Published var foodslow:(x: Int, y: Int)?
     @Published var isSlowed : Bool = false
+    @Published var onSuggestDifficultyChange: (() -> Void)?
     
     private var timer: AnyCancellable?
     private var bombaTimer: AnyCancellable?
     private var colorFoodSpawner: AnyCancellable?
     private var specialFoodTimer: AnyCancellable?
     private var powerUpTimer: AnyCancellable?
-    private var monsterTimer: AnyCancellable?
     private var invincibilityTimer: AnyCancellable?
     private var currentInterval: TimeInterval = 0.8
     private var cancellables = Set<AnyCancellable>()
@@ -32,10 +32,27 @@ class SnakeViewModel: ObservableObject {
     private var originalSpeed: TimeInterval?
     private var slowFoodTimer: AnyCancellable?
     
-    
     let gridSize = 15
     let maxLevel = 10
     let winningScore = 300
+    
+    deinit{
+        stopAllTimers()
+        NotificationCenter.default.removeObserver(self)
+        print("🧹SnakeViewModel Desalocado.")
+    }
+    
+    private func stopAllTimers() {
+        timer?.cancel()
+        bombaTimer?.cancel()
+        colorFoodSpawner?.cancel()
+        specialFoodTimer?.cancel()
+        powerUpTimer?.cancel()
+        invincibilityTimer?.cancel()
+        eatColorChangingFood?.cancel()
+        rainbowTimer?.cancel()
+        slowFoodTimer?.cancel()
+    }
     
     // 🟡 Comida especial que some rápido
     init(mode: GameModo) {
@@ -54,7 +71,6 @@ class SnakeViewModel: ObservableObject {
         )
         
         timer?.cancel()
-        
         startGameLoop()
         
         NotificationCenter.default.addObserver(
@@ -87,6 +103,7 @@ class SnakeViewModel: ObservableObject {
     func pauseGame() {
         isPaused = true
         timer?.cancel()
+        stopAllTimers()
     }
     
     /// ▶ **Retoma o jogo**
@@ -112,7 +129,7 @@ class SnakeViewModel: ObservableObject {
             score: 0,
             level: 1,
             startTime: Date(),
-            foodslow: (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10))
+           // foodslow: (x: Int.random(in: 0..<10), y: Int.random(in: 0..<10))
 
         )
         specialFood = nil
@@ -168,25 +185,38 @@ class SnakeViewModel: ObservableObject {
             }
     }
     
-    /// ✨ **Cria comida especial que desaparece e reaparece antes de sumir**
+    private var specialFoodDisappearTimer: AnyCancellable?
+
     private func spawnSpecialFood() {
         guard specialFood == nil else { return }
-        
+
         let foodPosition = (x: Int.random(in: 0..<gridSize), y: Int.random(in: 0..<gridSize))
         specialFood = foodPosition
+
+        // Cria um timer com comportamento controlado
+        var step = 0
+        specialFoodDisappearTimer?.cancel()
         
-        // Comida especial "pisca" rapidamente antes de sumir
-        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) { [weak self] in
-            self?.specialFood = nil
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) { [weak self] in
-            self?.specialFood = foodPosition
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0) { [weak self] in
-            self?.specialFood = nil
+        specialFoodDisappearTimer = Timer.publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                step += 1
+
+                switch step {
+                case 7:
+                    self.specialFood = nil // some
+                case 8:
+                    self.specialFood = foodPosition // reaparece
+                case 15:
+                    self.specialFood = nil // desaparece de vez
+                    self.specialFoodDisappearTimer?.cancel()
+                default:
+                    break
+            }
         }
     }
-    
+
     private func moveSnake() {
         guard !isGameOver, !hasWon else { return }
         guard let head = model.snake.first else { return }
@@ -372,7 +402,12 @@ class SnakeViewModel: ObservableObject {
             if gameModo != .easy {
                 spawnObstacles()
             }
-            increaseSpeed() // Certifique-se de que a velocidade nunca diminua!
+            increaseSpeed()
+        }
+        
+        if model.level == 5 || model.level == 8 {
+            suggestChangingDifficulty()
+            
         }
     }
     
@@ -669,7 +704,7 @@ class SnakeViewModel: ObservableObject {
         }
     }
     
-  // ------------------------------------ Função para desacelerar a Cobrinha ---------------------------//
+  // ------------------------------------ Função para Desacelerar a Cobrinha ---------------------------//
     private func handleSlowFoodEffect() {
         guard originalSpeed == nil else { return }
 
@@ -739,6 +774,27 @@ class SnakeViewModel: ObservableObject {
         }
     }
     
+    private func suggestChangingDifficulty() {
+        DispatchQueue.main.async {
+            if let controller = WKExtension.shared().rootInterfaceController {
+                controller.presentAlert(
+                    withTitle: "🎯 Novo Desafio?",
+                    message: "Você chegou ao nível \(self.model.level)! Que tal tentar uma dificuldade mais alta?",
+                    preferredStyle: .alert,
+                    actions: [
+                        WKAlertAction(title: "Sim", style: .default, handler: {
+                            print("Usuário quer mudar de dificuldade")
+                            self.onSuggestDifficultyChange?()
+                        }),
+                        WKAlertAction(title: "Continuar", style: .cancel, handler: {
+                            print("Usuário preferiu continuar")
+                        })
+                    ]
+                )
+            }
+        }
+    }
+
     //  ---------------------------------- Banco de Dados UserDefalt ----------------------------------
     
     private func saveHighScore() {
