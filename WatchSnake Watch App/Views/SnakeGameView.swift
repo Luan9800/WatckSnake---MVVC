@@ -240,7 +240,7 @@ private func isSnakeCell(row: Int, col: Int) -> Bool {
 private func pausedView() -> some View {
     VStack {
         Text("⏸ Pausado")
-            .font(.title3)
+            .font(.title2)
             .bold()
             .foregroundColor(.yellow)
         
@@ -251,7 +251,6 @@ private func pausedView() -> some View {
                 .font(.title3)
                 .bold()
                 .padding()
-                .background(Color.green)
                 .foregroundColor(.white)
                 .clipShape(Circle())
         }
