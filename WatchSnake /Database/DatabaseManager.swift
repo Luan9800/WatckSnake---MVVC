@@ -41,19 +41,21 @@ final class DatabaseManager {
             UserDefaults.standard.set(encoded, forKey: key)
         }
         
-        // ✅ Checagem de "vitória" por modo
+        // ✅ Checagem de "Vitória" por Modo
         let winningScore: Int = {
             switch modo {
-            case .easy: return 150
+            case .easy: return 250
             case .medium: return 500
             case .hard: return 700
-            case .expert: return 1000
+            case .expert: return 950
             }
         }()
         
         if score >= winningScore {
             DispatchQueue.main.async {
                 print("🎉 Parabéns \(playerName)! Você zerou o nível \(modo.rawValue) com \(score) pontos! 🎉")
+                
+                UserDefaults.standard.set(true, forKey:"modo_\(modo.rawValue)_zerado")
             }
         }
     }
@@ -71,10 +73,39 @@ final class DatabaseManager {
         }
     }
     
-    // MARK: - Resetar banco
+    // MARK: - Resetar Banco
+    func deleteScores(for modo: GameModo) {
+        let allScores = getTopScores()
+        let filtered = allScores.filter { $0.modo != modo.rawValue }
+        
+        if let encoded = try? JSONEncoder().encode(filtered) {
+            UserDefaults.standard.set(encoded, forKey: key)
+        }
+    }
+    
     func resetDatabase() {
         print("🔄 Resetando banco de dados UserDefaults...")
         UserDefaults.standard.removeObject(forKey: key)
         UserDefaults.standard.removeObject(forKey: lastScoreKey)
+    }
+    
+    // 🔁 Resetar um Modo Específico
+    func resetMode(_ modo: GameModo) {
+        UserDefaults.standard.removeObject(forKey: "modo_\(modo.rawValue)_zerado")
+        let filtered = getTopScores().filter { $0.modo != modo.rawValue }
+        
+        if let encoded = try? JSONEncoder().encode(filtered) {
+            UserDefaults.standard.set(encoded, forKey: key)
+        }
+        
+        print("🔁 Modo \(modo.rawValue) resetado com sucesso.")
+    }
+    
+    // 🔄 Resetar Todos os Modos
+    func resetAllModes(){
+        for modo in GameModo.allCases {
+            resetMode(modo)
+        }
+        print("🔄 Todos os modos e pontuações foram resetados.")
     }
 }

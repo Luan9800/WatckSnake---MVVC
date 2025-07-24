@@ -2,10 +2,12 @@ import SwiftUI
 import WatchKit
 
 struct EnterPlayerNameView: View {
-    @State private var isNavigating = false
+    @State private var pulse = false
     @State private var isGlowing = false
+    @State private var glowPulse = false
+    @State private var isNavigating = false
     @State private var playerName: String = ""
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 4) {
@@ -26,24 +28,31 @@ struct EnterPlayerNameView: View {
                 }
                 
                 TextField(
-                    playerName.isEmpty ? "Digite seu nome" : "",
+                    playerName.isEmpty ? "Digite seu Nome:" : "",
                     text: $playerName,
                     onCommit: saveUserName
                 )
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.black.opacity(0.4)))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(isGlowing ? Color.red : Color.green, lineWidth: isGlowing ? 5 : 3)
-                            .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: isGlowing)
-                    )
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 200)
-                    .onAppear {
-                        isGlowing.toggle()
-                        autoFillUserNameIfPossible()
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.black.opacity(0.2))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(glowPulse ? Color.red : Color.green, lineWidth: 4)
+                        .shadow(color: (glowPulse ? Color.green : Color.red).opacity(0.8), radius: 5)
+                        .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: glowPulse)
+                )
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 200)
+                .onAppear {
+                    glowPulse.toggle()
+                    withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
+                        glowPulse.toggle()
                     }
+                    autoFillUserNameIfPossible()
+                }
                 
                 Spacer()
                 
@@ -61,8 +70,13 @@ struct EnterPlayerNameView: View {
                         .foregroundColor(.red)
                 }
                 .disabled(playerName.isEmpty)
+                .scaleEffect(pulse ? 1.1 : 1.0)
                 .buttonStyle(.plain)
                 .padding(.bottom, 5)
+                .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulse)
+                .onAppear {
+                    pulse = true
+                }
             }
             .frame(maxHeight: 80)
             .padding(.horizontal, 20)
@@ -72,6 +86,7 @@ struct EnterPlayerNameView: View {
                 GameModeSelectionView()
                     .navigationBarBackButtonHidden(true)
                     .navigationBarHidden(true)
+                
             }
         }
     }
@@ -86,14 +101,14 @@ struct EnterPlayerNameView: View {
             playerName = savedName
             return
         }
-
+        
         let deviceName = WKInterfaceDevice.current().name
         if let name = extractName(from: deviceName) {
             playerName = name
             saveUserName()
         }
     }
-
+    
     /// Exemplo: "Apple Watch de João" → "João"
     private func extractName(from deviceName: String) -> String? {
         if let range = deviceName.range(of: " de ") {

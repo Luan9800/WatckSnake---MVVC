@@ -2,19 +2,36 @@ import SwiftUI
 import WatchKit
 
 struct GameTutorialView: View {
-    @Binding var isShowingTutorial: Bool
+    @State private var pulse = false
     @State private var navigateToGameMode = false
+    
+    @Binding var isShowingTutorial: Bool
     
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: geometry.size.height * 0.010) {
-                        Text("Como Jogar 🐍")
-                            .font(.system(size: geometry.size.width * 0.12))
-                            .padding(.top, geometry.size.height * 0.02)
-                            .bold()
+                        HStack(spacing: 4) {
+                            Text("Como")
+                                .foregroundColor(.green)
+                                .bold()
+                                .font(.system(size: geometry.size.width * 0.12, weight: .heavy, design: .monospaced))
+                                .shadow(color: .green.opacity(0.5), radius: 0, x: 1.5, y: 1.5)
+
+                            Text("Jogar")
+                                .foregroundColor(.red)
+                                .bold()
+                                .font(.system(size: geometry.size.width * 0.12, weight: .heavy, design: .monospaced))
+                                .shadow(color: .red.opacity(0.5), radius: 0, x: 1.5, y: 1.5)
+
+                            Text("🐍")
+                                .font(.system(size: geometry.size.width * 0.12))
+                        }                        .font(.system(size: geometry.size.width * 0.12))
+                        .padding(.top, geometry.size.height * 0.02)
+                        
                         Spacer()
+                        
                         VStack(alignment: .leading, spacing: geometry.size.height * 0.03) {
                             Text("🎯 **Objetivo**")
                                 .font(.system(size: geometry.size.width * 0.08))
@@ -28,7 +45,8 @@ struct GameTutorialView: View {
                             Text("Toque na tela para mudar de direção.")
                                 .font(.system(size: geometry.size.width * 0.07))
                             
-                            Text("🔥 **Elementos**")
+                            Spacer()
+                            Text("🔥 **Elementos:**")
                                 .font(.system(size: geometry.size.width * 0.08))
                                 .bold()
                         }
@@ -95,13 +113,18 @@ struct GameTutorialView: View {
                         Button(action: {
                             navigateToGameMode = true
                         }) {
-                            Text("Jogar 🐍")
-                                .font(.system(size: geometry.size.width * 0.09))
+                            Text("🐍")
+                                .font(.system(size: geometry.size.width * 0.15))
+                                .scaleEffect(pulse ? 1.4 : 1.0)
+                                .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulse)
                                 .padding(geometry.size.height * 0.015)
                                 .frame(maxWidth: geometry.size.width * 0.8)
-                                .background(Color.red)
+                                .background(Color.black)
                                 .foregroundColor(.white)
                                 .cornerRadius(geometry.size.width * 0.1)
+                                .onAppear {
+                                    pulse = true
+                                }
                         }
                         .padding(.bottom, geometry.size.height * 0.03)
                         .buttonStyle(.plain)

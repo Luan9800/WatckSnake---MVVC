@@ -60,8 +60,8 @@ struct HighScoresView: View {
                         }
                         Spacer()
                         VStack {
-                            Text("\(score.score)")
-                                .foregroundColor(.green)
+                            Text(isModeZerado(score: score) ? "Zerado" : "\(score.score)")
+                                .foregroundColor(isModeZerado(score: score) ? .cyan : .green)
                                 .font(.headline)
                                 .bold()
                             
@@ -84,6 +84,16 @@ struct HighScoresView: View {
                 scores = DatabaseManager.shared.getTopScores()
                 isLoading = false
                 
+                // Checa se o modo atual foi zerado
+                let key = "modo_\(selectedMode.rawValue)_zerado"
+                if UserDefaults.standard.bool(forKey: key) {
+                // Mostra uma mensagem temporária no topo
+                    WKInterfaceDevice.current().play(.success) // Feedback Tátil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        showZeradoAlert(mode: selectedMode)
+                    }
+                }
+                
                 try? await Task.sleep(nanoseconds: 8_000_000_000)
                 
                 if isPresented {
@@ -97,6 +107,25 @@ struct HighScoresView: View {
         .toolbar(.hidden)
     }
 }
+
+
+private func isModeZerado(score: HighScore) -> Bool {
+    let key = "modo_\(score.modo)_zerado"
+    return UserDefaults.standard.bool(forKey: key)
+}
+
+private func showZeradoAlert(mode: GameModo) {
+       if let controller = WKExtension.shared().rootInterfaceController {
+           controller.presentAlert(
+               withTitle: "🎉 Modo \(mode.rawValue) Zerado!",
+               message: "Você concluiu o modo com sucesso. Parabéns!",
+               preferredStyle: .alert,
+               actions: [
+                   WKAlertAction(title: "Ok", style: .default, handler: {})
+               ]
+           )
+       }
+   }
 
 #Preview {
     NavigationStack {

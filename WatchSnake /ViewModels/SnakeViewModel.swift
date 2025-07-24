@@ -18,6 +18,7 @@ class SnakeViewModel: ObservableObject {
     @Published var foodslow:(x: Int, y: Int)?
     @Published var isSlowed : Bool = false
     @Published var onSuggestDifficultyChange: (() -> Void)?
+    @Published var isModeCompleted: Bool = false
     
     private var timer: AnyCancellable?
     private var bombaTimer: AnyCancellable?
@@ -392,13 +393,23 @@ class SnakeViewModel: ObservableObject {
         // ✅ Verifica se o jogador venceu
         if model.score >= winningScore || model.level >= maxLevel {
             hasWon = true
+            isModeCompleted = true
             timer?.cancel()
+            saveHighScore()
+            
+            triggerHapticFeedback(type: .success)
+        
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4){
+                self.triggerHapticFeedback(type: .notification)
+            }
             return
         }
         
         // ✅ Aumenta o nível e adiciona obstáculos se necessário
         if model.score % 50 == 0 && model.level < maxLevel {
             model.level += 1
+            triggerHapticFeedback(type: .success)
+            
             if gameModo != .easy {
                 spawnObstacles()
             }
@@ -415,6 +426,7 @@ class SnakeViewModel: ObservableObject {
     private func eatSpecialFood() {
         model.score += 20
         specialFood = nil
+        triggerHapticFeedback(type: .start)
         
         if let lastSegment = model.snake.last {
             let newSegment = lastSegment
@@ -482,6 +494,8 @@ class SnakeViewModel: ObservableObject {
         colorChangingFood = nil
         
         model.isInvincible = true
+        triggerHapticFeedback(type: .success)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
             self?.model.isInvincible = false
         }
@@ -667,11 +681,16 @@ class SnakeViewModel: ObservableObject {
         triggerHapticFeedback(type: .failure)
         triggerHapticFeedback(type: .retry)
         
+        //Efeito Tremor
+        withAnimation(.easeInOut(duration: 0.1).repeatCount(3, autoreverses: true)) {
+        }
         if model.snake.count > 2 {
             model.snake.removeLast()
         } else {
             isGameOver = true
             timer?.cancel()
+            saveHighScore()
+            triggerHapticFeedback(type: .success)
         }
     }
     
@@ -783,8 +802,10 @@ class SnakeViewModel: ObservableObject {
                     preferredStyle: .alert,
                     actions: [
                         WKAlertAction(title: "Sim", style: .default, handler: {
-                            print("Usuário quer mudar de dificuldade")
+                            self.triggerHapticFeedback(type: .directionUp)
                             self.onSuggestDifficultyChange?()
+                            
+                            print("Usuário quer mudar de dificuldade")
                         }),
                         WKAlertAction(title: "Continuar", style: .cancel, handler: {
                             print("Usuário preferiu continuar")
@@ -794,7 +815,7 @@ class SnakeViewModel: ObservableObject {
             }
         }
     }
-
+    
     //  ---------------------------------- Banco de Dados UserDefalt ----------------------------------
     
     private func saveHighScore() {

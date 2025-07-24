@@ -4,48 +4,63 @@ import WatchKit
 import Foundation
 
 struct SnakeGameView: View {
-    @StateObject private var viewModel: SnakeViewModel
-    @State private var snakeBlockSize: CGFloat = 13.5
-    @State private var showRanking = false
-    @State private var animateColorFood = false
     @State var animateSkull = false
+    @State private var foodslow = false
+    @State private var showRanking = false
     @State private var flashBackground = false
     @State private var skullColorToggle = false
-    @State private var foodslow = false
+    @State private var animateColorFood = false
+    @State private var snakeOffset: CGPoint = .zero
+    @State private var snakeBlockSize: CGFloat = 13.6
+    
+    @StateObject private var viewModel: SnakeViewModel
     
     let selectedMode: GameModo
     var isPreview: Bool = false
     
     @Environment(\.dismiss) private var dismiss
-
-       init(selectedMode: GameModo, viewModel: SnakeViewModel? = nil, isPreview: Bool = false) {
-           _viewModel = StateObject(wrappedValue: viewModel ?? SnakeViewModel(mode: selectedMode))
-           self.selectedMode = selectedMode
-           self.isPreview = isPreview
-       }
+    
+    init(selectedMode: GameModo, viewModel: SnakeViewModel? = nil, isPreview: Bool = false) {
+        _viewModel = StateObject(wrappedValue: viewModel ?? SnakeViewModel(mode: selectedMode))
+        self.selectedMode = selectedMode
+        self.isPreview = isPreview
+    }
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.black.ignoresSafeArea()
-                     ParallaxBackground()
-                    .edgesIgnoringSafeArea(.all)
-                
-                VStack {
-                    if viewModel.isPaused {
-                        pausedView()
-                    } else if viewModel.isGameOver {
-                        gameOverView()
-                    } else if viewModel.hasWon {
-                        victoryView()
-                    } else {
-                        gameGridView()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.bottom, 5)
-                .buttonStyle(PlainButtonStyle())
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            
+            ParallaxBackground()
+                .ignoresSafeArea()
+            
+            if flashBackground {
+                Color.white
+                    .opacity(0.6)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .zIndex(12) // garante que fique sobre tudo
             }
+            
+            VStack {
+                if viewModel.isPaused {
+                    pausedView()
+                } else if viewModel.isGameOver {
+                    gameOverView()
+                } else if viewModel.hasWon {
+                    victoryView()
+                } else if viewModel.isModeCompleted {
+                    modeCompletedView()
+                } else {
+                    gameGridView()
+                }
+            }
+            .offset(x: snakeOffset.x, y:snakeOffset.y)
+            .padding(.bottom, 5)
+            .buttonStyle(PlainButtonStyle())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .environment(\.isLuminanceReduced, true)
+            
             .onAppear {
                 #if DEBUG
                 if !ProcessInfo.processInfo.environment.keys.contains("XCODE_RUNNING_FOR_PREVIEWS") {
@@ -204,7 +219,7 @@ private func gameGridView() -> some View {
         GridStack(rows: viewModel.gridSize, columns: viewModel.gridSize) { row, col in
             Rectangle()
                 .foregroundColor(getCellColor(row: row, col: col))
-                .frame(width: 13.5, height: 15.8)
+                .frame(width: 13.2, height: 16.3)
                 .animation(.easeInOut(duration: 0.3), value: snakeBlockSize)
 
                 .overlay(
@@ -253,9 +268,59 @@ private func pausedView() -> some View {
                 .padding()
                 .foregroundColor(.white)
                 .clipShape(Circle())
+                .buttonStyle(.plain)
         }
     }
 }
+    
+    private func modeCompletedView() -> some View {
+        VStack(spacing: 10) {
+            Text("🎉 Modo Concluído!")
+                .font(.title2)
+                .bold()
+                .foregroundColor(.green)
+                .padding(.top)
+
+            Text("Você zerou o modo \(selectedMode.rawValue.capitalized)!")
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+            Text("Pontuação final: \(viewModel.model.score)")
+                .foregroundColor(.yellow)
+                .bold()
+
+            Text("Nível alcançado: \(viewModel.model.level)")
+                .foregroundColor(.cyan)
+
+            Button(action: {
+                viewModel.startGameLoop()
+            }) {
+                Text("🔁 Jogar Novamente")
+                    .font(.headline)
+                    .foregroundColor(.black)
+                    .frame(width: 120, height: 40)
+                    .background(RoundedRectangle(cornerRadius: 12).fill(Color.green))
+            }
+
+            Button(action: {
+                showRanking = true
+            }) {
+                Text("🏆 Ver Ranking")
+                    .font(.headline)
+                    .foregroundColor(.black)
+                    .frame(width: 120, height: 40)
+                    .background(RoundedRectangle(cornerRadius: 12).fill(Color.yellow))
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 25)
+                .fill(Color.black.opacity(0.7))
+                .shadow(radius: 5)
+        )
+        .padding()
+    }
 
 private func getCellColor(row: Int, col: Int) -> Color {
         if viewModel.model.snake.contains(where: { $0.x == col && $0.y == row }) {
